@@ -1,0 +1,221 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_OUTPUT_EXCMD	mixed	/number, pattern, mixed, or combineV2/
+!_TAG_OUTPUT_FILESEP	slash	/slash or backslash/
+!_TAG_OUTPUT_MODE	u-ctags	/u-ctags or e-ctags/
+!_TAG_PATTERN_LENGTH_LIMIT	96	/0 for no limit/
+!_TAG_PROC_CWD	/home/tamer/prog/rust/rust-chess/	//
+!_TAG_PROGRAM_AUTHOR	Universal Ctags Team	//
+!_TAG_PROGRAM_NAME	Universal Ctags	/Derived from Exuberant Ctags/
+!_TAG_PROGRAM_URL	https://ctags.io/	/official site/
+!_TAG_PROGRAM_VERSION	5.9.0	/p5.9.20210905.0/
+0	target/debug/.fingerprint/rust-chess-06b5baf3601adc08/bin-rust-chess.json	/^{"rustc":8020860686714880400,"features":"[]","target":11861220859602393080,"profile":92510136562/;"	o	array:local
+0	target/debug/.fingerprint/rust-chess-6cd3205f69889a64/test-bin-rust-chess.json	/^{"rustc":9289672224281493355,"features":"[]","target":11861220859602393080,"profile":10216330754/;"	o	array:local
+0	target/debug/.fingerprint/rust-chess-d690b98964cda0fb/bin-rust-chess.json	/^{"rustc":9289672224281493355,"features":"[]","target":11861220859602393080,"profile":73091416868/;"	o	array:local
+17598535894874457435	target/.rustc_info.json	/^{"rustc_fingerprint":10772405062869203637,"outputs":{"8478739912462367707":{"success":false,"sta/;"	o	object:outputs
+2797684049618456168	target/.rustc_info.json	/^{"rustc_fingerprint":10772405062869203637,"outputs":{"8478739912462367707":{"success":false,"sta/;"	o	object:outputs
+8478739912462367707	target/.rustc_info.json	/^{"rustc_fingerprint":10772405062869203637,"outputs":{"8478739912462367707":{"success":false,"sta/;"	o	object:outputs
+931469667778813386	target/.rustc_info.json	/^{"rustc_fingerprint":10772405062869203637,"outputs":{"8478739912462367707":{"success":false,"sta/;"	o	object:outputs
+9666181950136269162	target/.rustc_info.json	/^{"rustc_fingerprint":10772405062869203637,"outputs":{"8478739912462367707":{"success":false,"sta/;"	o	object:outputs
+A1	src/main.rs	/^    A1, B1, C1, D1, E1, F1, G1, H1,$/;"	e	enum:SquareLabels
+A2	src/main.rs	/^    A2, B2, C2, D2, E2, F2, G2, H2,$/;"	e	enum:SquareLabels
+A3	src/main.rs	/^    A3, B3, C3, D3, E3, F3, G3, H3,$/;"	e	enum:SquareLabels
+A4	src/main.rs	/^    A4, B4, C4, D4, E4, F4, G4, H4,$/;"	e	enum:SquareLabels
+A5	src/main.rs	/^    A5, B5, C5, D5, E5, F5, G5, H5,$/;"	e	enum:SquareLabels
+A6	src/main.rs	/^    A6, B6, C6, D6, E6, F6, G6, H6,$/;"	e	enum:SquareLabels
+A7	src/main.rs	/^    A7, B7, C7, D7, E7, F7, G7, H7,$/;"	e	enum:SquareLabels
+A8	src/main.rs	/^    A8, B8, C8, D8, E8, F8, G8, H8,$/;"	e	enum:SquareLabels
+B1	src/main.rs	/^    A1, B1, C1, D1, E1, F1, G1, H1,$/;"	e	enum:SquareLabels
+B2	src/main.rs	/^    A2, B2, C2, D2, E2, F2, G2, H2,$/;"	e	enum:SquareLabels
+B3	src/main.rs	/^    A3, B3, C3, D3, E3, F3, G3, H3,$/;"	e	enum:SquareLabels
+B4	src/main.rs	/^    A4, B4, C4, D4, E4, F4, G4, H4,$/;"	e	enum:SquareLabels
+B5	src/main.rs	/^    A5, B5, C5, D5, E5, F5, G5, H5,$/;"	e	enum:SquareLabels
+B6	src/main.rs	/^    A6, B6, C6, D6, E6, F6, G6, H6,$/;"	e	enum:SquareLabels
+B7	src/main.rs	/^    A7, B7, C7, D7, E7, F7, G7, H7,$/;"	e	enum:SquareLabels
+B8	src/main.rs	/^    A8, B8, C8, D8, E8, F8, G8, H8,$/;"	e	enum:SquareLabels
+BitBoard	src/main.rs	/^pub struct BitBoard(pub u64);$/;"	s
+Board	src/main.rs	/^impl Board {$/;"	c
+Board	src/main.rs	/^pub struct Board {$/;"	s
+C1	src/main.rs	/^    A1, B1, C1, D1, E1, F1, G1, H1,$/;"	e	enum:SquareLabels
+C2	src/main.rs	/^    A2, B2, C2, D2, E2, F2, G2, H2,$/;"	e	enum:SquareLabels
+C3	src/main.rs	/^    A3, B3, C3, D3, E3, F3, G3, H3,$/;"	e	enum:SquareLabels
+C4	src/main.rs	/^    A4, B4, C4, D4, E4, F4, G4, H4,$/;"	e	enum:SquareLabels
+C5	src/main.rs	/^    A5, B5, C5, D5, E5, F5, G5, H5,$/;"	e	enum:SquareLabels
+C6	src/main.rs	/^    A6, B6, C6, D6, E6, F6, G6, H6,$/;"	e	enum:SquareLabels
+C7	src/main.rs	/^    A7, B7, C7, D7, E7, F7, G7, H7,$/;"	e	enum:SquareLabels
+C8	src/main.rs	/^    A8, B8, C8, D8, E8, F8, G8, H8,$/;"	e	enum:SquareLabels
+Castling	src/main.rs	/^impl Castling {$/;"	c
+Castling	src/main.rs	/^pub struct Castling;$/;"	s
+CastlingRights	src/main.rs	/^impl CastlingRights {$/;"	c
+CastlingRights	src/main.rs	/^impl Default for CastlingRights {$/;"	c
+CastlingRights	src/main.rs	/^pub struct CastlingRights(u8);$/;"	s
+CheckDepInfo	target/debug/.fingerprint/rust-chess-06b5baf3601adc08/bin-rust-chess.json	/^{"rustc":8020860686714880400,"features":"[]","target":11861220859602393080,"profile":92510136562/;"	o	object:local.0
+CheckDepInfo	target/debug/.fingerprint/rust-chess-6cd3205f69889a64/test-bin-rust-chess.json	/^{"rustc":9289672224281493355,"features":"[]","target":11861220859602393080,"profile":10216330754/;"	o	object:local.0
+CheckDepInfo	target/debug/.fingerprint/rust-chess-d690b98964cda0fb/bin-rust-chess.json	/^{"rustc":9289672224281493355,"features":"[]","target":11861220859602393080,"profile":73091416868/;"	o	object:local.0
+D1	src/main.rs	/^    A1, B1, C1, D1, E1, F1, G1, H1,$/;"	e	enum:SquareLabels
+D2	src/main.rs	/^    A2, B2, C2, D2, E2, F2, G2, H2,$/;"	e	enum:SquareLabels
+D3	src/main.rs	/^    A3, B3, C3, D3, E3, F3, G3, H3,$/;"	e	enum:SquareLabels
+D4	src/main.rs	/^    A4, B4, C4, D4, E4, F4, G4, H4,$/;"	e	enum:SquareLabels
+D5	src/main.rs	/^    A5, B5, C5, D5, E5, F5, G5, H5,$/;"	e	enum:SquareLabels
+D6	src/main.rs	/^    A6, B6, C6, D6, E6, F6, G6, H6,$/;"	e	enum:SquareLabels
+D7	src/main.rs	/^    A7, B7, C7, D7, E7, F7, G7, H7,$/;"	e	enum:SquareLabels
+D8	src/main.rs	/^    A8, B8, C8, D8, E8, F8, G8, H8,$/;"	e	enum:SquareLabels
+E1	src/main.rs	/^    A1, B1, C1, D1, E1, F1, G1, H1,$/;"	e	enum:SquareLabels
+E2	src/main.rs	/^    A2, B2, C2, D2, E2, F2, G2, H2,$/;"	e	enum:SquareLabels
+E3	src/main.rs	/^    A3, B3, C3, D3, E3, F3, G3, H3,$/;"	e	enum:SquareLabels
+E4	src/main.rs	/^    A4, B4, C4, D4, E4, F4, G4, H4,$/;"	e	enum:SquareLabels
+E5	src/main.rs	/^    A5, B5, C5, D5, E5, F5, G5, H5,$/;"	e	enum:SquareLabels
+E6	src/main.rs	/^    A6, B6, C6, D6, E6, F6, G6, H6,$/;"	e	enum:SquareLabels
+E7	src/main.rs	/^    A7, B7, C7, D7, E7, F7, G7, H7,$/;"	e	enum:SquareLabels
+E8	src/main.rs	/^    A8, B8, C8, D8, E8, F8, G8, H8,$/;"	e	enum:SquareLabels
+F1	src/main.rs	/^    A1, B1, C1, D1, E1, F1, G1, H1,$/;"	e	enum:SquareLabels
+F2	src/main.rs	/^    A2, B2, C2, D2, E2, F2, G2, H2,$/;"	e	enum:SquareLabels
+F3	src/main.rs	/^    A3, B3, C3, D3, E3, F3, G3, H3,$/;"	e	enum:SquareLabels
+F4	src/main.rs	/^    A4, B4, C4, D4, E4, F4, G4, H4,$/;"	e	enum:SquareLabels
+F5	src/main.rs	/^    A5, B5, C5, D5, E5, F5, G5, H5,$/;"	e	enum:SquareLabels
+F6	src/main.rs	/^    A6, B6, C6, D6, E6, F6, G6, H6,$/;"	e	enum:SquareLabels
+F7	src/main.rs	/^    A7, B7, C7, D7, E7, F7, G7, H7,$/;"	e	enum:SquareLabels
+F8	src/main.rs	/^    A8, B8, C8, D8, E8, F8, G8, H8,$/;"	e	enum:SquareLabels
+G1	src/main.rs	/^    A1, B1, C1, D1, E1, F1, G1, H1,$/;"	e	enum:SquareLabels
+G2	src/main.rs	/^    A2, B2, C2, D2, E2, F2, G2, H2,$/;"	e	enum:SquareLabels
+G3	src/main.rs	/^    A3, B3, C3, D3, E3, F3, G3, H3,$/;"	e	enum:SquareLabels
+G4	src/main.rs	/^    A4, B4, C4, D4, E4, F4, G4, H4,$/;"	e	enum:SquareLabels
+G5	src/main.rs	/^    A5, B5, C5, D5, E5, F5, G5, H5,$/;"	e	enum:SquareLabels
+G6	src/main.rs	/^    A6, B6, C6, D6, E6, F6, G6, H6,$/;"	e	enum:SquareLabels
+G7	src/main.rs	/^    A7, B7, C7, D7, E7, F7, G7, H7,$/;"	e	enum:SquareLabels
+G8	src/main.rs	/^    A8, B8, C8, D8, E8, F8, G8, H8,$/;"	e	enum:SquareLabels
+H1	src/main.rs	/^    A1, B1, C1, D1, E1, F1, G1, H1,$/;"	e	enum:SquareLabels
+H2	src/main.rs	/^    A2, B2, C2, D2, E2, F2, G2, H2,$/;"	e	enum:SquareLabels
+H3	src/main.rs	/^    A3, B3, C3, D3, E3, F3, G3, H3,$/;"	e	enum:SquareLabels
+H4	src/main.rs	/^    A4, B4, C4, D4, E4, F4, G4, H4,$/;"	e	enum:SquareLabels
+H5	src/main.rs	/^    A5, B5, C5, D5, E5, F5, G5, H5,$/;"	e	enum:SquareLabels
+H6	src/main.rs	/^    A6, B6, C6, D6, E6, F6, G6, H6,$/;"	e	enum:SquareLabels
+H7	src/main.rs	/^    A7, B7, C7, D7, E7, F7, G7, H7,$/;"	e	enum:SquareLabels
+H8	src/main.rs	/^    A8, B8, C8, D8, E8, F8, G8, H8,$/;"	e	enum:SquareLabels
+Knight	src/main.rs	/^impl Knight {$/;"	c
+Knight	src/main.rs	/^pub struct Knight;$/;"	s
+Knight	src/pieces.rs	/^impl Knight {$/;"	c
+Knight	src/pieces.rs	/^pub struct Knight;$/;"	s
+Moves	src/main.rs	/^trait Moves {$/;"	i
+None	src/main.rs	/^    None,$/;"	e	enum:SquareLabels
+Pawn	src/main.rs	/^impl Pawn {$/;"	c
+Pawn	src/main.rs	/^pub struct Pawn;$/;"	s
+Pawn	src/pieces.rs	/^impl Pawn {$/;"	c
+Pawn	src/pieces.rs	/^pub struct Pawn;$/;"	s
+Pieces	src/main.rs	/^impl Pieces {$/;"	c
+Pieces	src/main.rs	/^pub struct Pieces;$/;"	s
+Sides	src/main.rs	/^impl Sides {$/;"	c
+Sides	src/main.rs	/^pub struct Sides;$/;"	s
+Square	src/main.rs	/^pub struct Square(usize);$/;"	s
+SquareLabels	src/main.rs	/^pub enum SquareLabels {$/;"	g
+State	src/main.rs	/^pub struct State {$/;"	s
+all	src/main.rs	/^    fn all() -> Self {$/;"	P	implementation:CastlingRights
+bb_pieces	src/main.rs	/^    bb_pieces: [[BitBoard; 6]; 2],$/;"	m	struct:Board
+bb_sides	src/main.rs	/^    bb_sides: [BitBoard; 2],$/;"	m	struct:Board
+black_double_push	src/main.rs	/^    fn black_double_push(pawn: u64, empty_squares: u64) -> u64 {$/;"	P	implementation:Pawn
+black_double_push	src/pieces.rs	/^    fn black_double_push(pawn: u64, empty: u64) -> u64 {$/;"	P	implementation:Pawn
+black_double_pushable	src/main.rs	/^    fn black_double_pushable(black_pawns: u64, empty_squares: u64) {$/;"	P	implementation:Pawn
+black_push	src/main.rs	/^    fn black_push(pawn: u64, empty_squares: u64) -> u64 {$/;"	P	implementation:Pawn
+black_push	src/pieces.rs	/^    fn black_push(pawn: u64, empty: u64) -> u64 {$/;"	P	implementation:Pawn
+black_pushable	src/main.rs	/^    fn black_pushable(black_pawns: u64, empty_squares: u64) {$/;"	P	implementation:Pawn
+castling_rights	src/main.rs	/^    castling_rights: CastlingRights,$/;"	m	struct:State
+code	target/.rustc_info.json	/^{"rustc_fingerprint":10772405062869203637,"outputs":{"8478739912462367707":{"success":false,"sta/;"	n	object:outputs.17598535894874457435
+code	target/.rustc_info.json	/^{"rustc_fingerprint":10772405062869203637,"outputs":{"8478739912462367707":{"success":false,"sta/;"	n	object:outputs.2797684049618456168
+code	target/.rustc_info.json	/^{"rustc_fingerprint":10772405062869203637,"outputs":{"8478739912462367707":{"success":false,"sta/;"	n	object:outputs.8478739912462367707
+code	target/.rustc_info.json	/^{"rustc_fingerprint":10772405062869203637,"outputs":{"8478739912462367707":{"success":false,"sta/;"	n	object:outputs.931469667778813386
+code	target/.rustc_info.json	/^{"rustc_fingerprint":10772405062869203637,"outputs":{"8478739912462367707":{"success":false,"sta/;"	n	object:outputs.9666181950136269162
+compile_kind	target/debug/.fingerprint/rust-chess-06b5baf3601adc08/bin-rust-chess.json	/^{"rustc":8020860686714880400,"features":"[]","target":11861220859602393080,"profile":92510136562/;"	n
+compile_kind	target/debug/.fingerprint/rust-chess-6cd3205f69889a64/test-bin-rust-chess.json	/^{"rustc":9289672224281493355,"features":"[]","target":11861220859602393080,"profile":10216330754/;"	n
+compile_kind	target/debug/.fingerprint/rust-chess-d690b98964cda0fb/bin-rust-chess.json	/^{"rustc":9289672224281493355,"features":"[]","target":11861220859602393080,"profile":73091416868/;"	n
+config	target/debug/.fingerprint/rust-chess-06b5baf3601adc08/bin-rust-chess.json	/^{"rustc":8020860686714880400,"features":"[]","target":11861220859602393080,"profile":92510136562/;"	n
+config	target/debug/.fingerprint/rust-chess-6cd3205f69889a64/test-bin-rust-chess.json	/^{"rustc":9289672224281493355,"features":"[]","target":11861220859602393080,"profile":10216330754/;"	n
+config	target/debug/.fingerprint/rust-chess-d690b98964cda0fb/bin-rust-chess.json	/^{"rustc":9289672224281493355,"features":"[]","target":11861220859602393080,"profile":73091416868/;"	n
+default	src/main.rs	/^    fn default() -> Self {$/;"	P	implementation:CastlingRights
+dep_info	target/debug/.fingerprint/rust-chess-06b5baf3601adc08/bin-rust-chess.json	/^{"rustc":8020860686714880400,"features":"[]","target":11861220859602393080,"profile":92510136562/;"	s	object:local.0.CheckDepInfo
+dep_info	target/debug/.fingerprint/rust-chess-6cd3205f69889a64/test-bin-rust-chess.json	/^{"rustc":9289672224281493355,"features":"[]","target":11861220859602393080,"profile":10216330754/;"	s	object:local.0.CheckDepInfo
+dep_info	target/debug/.fingerprint/rust-chess-d690b98964cda0fb/bin-rust-chess.json	/^{"rustc":9289672224281493355,"features":"[]","target":11861220859602393080,"profile":73091416868/;"	s	object:local.0.CheckDepInfo
+deps	target/debug/.fingerprint/rust-chess-06b5baf3601adc08/bin-rust-chess.json	/^{"rustc":8020860686714880400,"features":"[]","target":11861220859602393080,"profile":92510136562/;"	a
+deps	target/debug/.fingerprint/rust-chess-6cd3205f69889a64/test-bin-rust-chess.json	/^{"rustc":9289672224281493355,"features":"[]","target":11861220859602393080,"profile":10216330754/;"	a
+deps	target/debug/.fingerprint/rust-chess-d690b98964cda0fb/bin-rust-chess.json	/^{"rustc":9289672224281493355,"features":"[]","target":11861220859602393080,"profile":73091416868/;"	a
+east_one	src/main.rs	/^    fn east_one(board: u64) -> u64 {$/;"	P	implementation:Board
+empty	src/main.rs	/^    fn empty() -> Self {$/;"	P	implementation:CastlingRights
+en_passant_square	src/main.rs	/^    en_passant_square: Option<Square>,$/;"	m	struct:State
+features	target/debug/.fingerprint/rust-chess-06b5baf3601adc08/bin-rust-chess.json	/^{"rustc":8020860686714880400,"features":"[]","target":11861220859602393080,"profile":92510136562/;"	s
+features	target/debug/.fingerprint/rust-chess-6cd3205f69889a64/test-bin-rust-chess.json	/^{"rustc":9289672224281493355,"features":"[]","target":11861220859602393080,"profile":10216330754/;"	s
+features	target/debug/.fingerprint/rust-chess-d690b98964cda0fb/bin-rust-chess.json	/^{"rustc":9289672224281493355,"features":"[]","target":11861220859602393080,"profile":73091416868/;"	s
+half_move_counter	src/main.rs	/^    half_move_counter: u8,$/;"	m	struct:State
+local	target/debug/.fingerprint/rust-chess-06b5baf3601adc08/bin-rust-chess.json	/^{"rustc":8020860686714880400,"features":"[]","target":11861220859602393080,"profile":92510136562/;"	a
+local	target/debug/.fingerprint/rust-chess-6cd3205f69889a64/test-bin-rust-chess.json	/^{"rustc":9289672224281493355,"features":"[]","target":11861220859602393080,"profile":10216330754/;"	a
+local	target/debug/.fingerprint/rust-chess-d690b98964cda0fb/bin-rust-chess.json	/^{"rustc":9289672224281493355,"features":"[]","target":11861220859602393080,"profile":73091416868/;"	a
+main	src/main.rs	/^fn main() {$/;"	f
+metadata	target/debug/.fingerprint/rust-chess-06b5baf3601adc08/bin-rust-chess.json	/^{"rustc":8020860686714880400,"features":"[]","target":11861220859602393080,"profile":92510136562/;"	n
+metadata	target/debug/.fingerprint/rust-chess-6cd3205f69889a64/test-bin-rust-chess.json	/^{"rustc":9289672224281493355,"features":"[]","target":11861220859602393080,"profile":10216330754/;"	n
+metadata	target/debug/.fingerprint/rust-chess-d690b98964cda0fb/bin-rust-chess.json	/^{"rustc":9289672224281493355,"features":"[]","target":11861220859602393080,"profile":73091416868/;"	n
+north_east_east	src/main.rs	/^    fn north_east_east(knight: u64) -> u64 {$/;"	P	implementation:Knight
+north_east_east	src/pieces.rs	/^    fn north_east_east(knight: u64) -> u64 {$/;"	P	implementation:Knight
+north_north_west	src/main.rs	/^    fn north_north_west(knight: u64) -> u64 {$/;"	P	implementation:Knight
+north_north_west	src/pieces.rs	/^    fn north_north_west(knight: u64) -> u64 {$/;"	P	implementation:Knight
+north_one	src/main.rs	/^    fn north_one(board: u64) -> u64 {$/;"	P	implementation:Board
+north_west_west	src/main.rs	/^    fn north_west_west(knight: u64) -> u64 {$/;"	P	implementation:Knight
+north_west_west	src/pieces.rs	/^    fn north_west_west(knight: u64) -> u64 {$/;"	P	implementation:Knight
+northeast_one	src/main.rs	/^    fn northeast_one(board: u64) -> u64 {$/;"	P	implementation:Board
+northwest_one	src/main.rs	/^    fn northwest_one(board: u64) -> u64 {$/;"	P	implementation:Board
+outputs	target/.rustc_info.json	/^{"rustc_fingerprint":10772405062869203637,"outputs":{"8478739912462367707":{"success":false,"sta/;"	o
+path	target/debug/.fingerprint/rust-chess-06b5baf3601adc08/bin-rust-chess.json	/^{"rustc":8020860686714880400,"features":"[]","target":11861220859602393080,"profile":92510136562/;"	n
+path	target/debug/.fingerprint/rust-chess-6cd3205f69889a64/test-bin-rust-chess.json	/^{"rustc":9289672224281493355,"features":"[]","target":11861220859602393080,"profile":10216330754/;"	n
+path	target/debug/.fingerprint/rust-chess-d690b98964cda0fb/bin-rust-chess.json	/^{"rustc":9289672224281493355,"features":"[]","target":11861220859602393080,"profile":73091416868/;"	n
+profile	target/debug/.fingerprint/rust-chess-06b5baf3601adc08/bin-rust-chess.json	/^{"rustc":8020860686714880400,"features":"[]","target":11861220859602393080,"profile":92510136562/;"	n
+profile	target/debug/.fingerprint/rust-chess-6cd3205f69889a64/test-bin-rust-chess.json	/^{"rustc":9289672224281493355,"features":"[]","target":11861220859602393080,"profile":10216330754/;"	n
+profile	target/debug/.fingerprint/rust-chess-d690b98964cda0fb/bin-rust-chess.json	/^{"rustc":9289672224281493355,"features":"[]","target":11861220859602393080,"profile":73091416868/;"	n
+rotate_left	src/main.rs	/^    fn rotate_left(board: u64, s: i32) -> u64 {$/;"	P	implementation:Board
+rotate_right	src/main.rs	/^    fn rotate_right(board: u64, s: i32) -> u64 {$/;"	P	implementation:Board
+rustc	target/debug/.fingerprint/rust-chess-06b5baf3601adc08/bin-rust-chess.json	/^{"rustc":8020860686714880400,"features":"[]","target":11861220859602393080,"profile":92510136562/;"	n
+rustc	target/debug/.fingerprint/rust-chess-6cd3205f69889a64/test-bin-rust-chess.json	/^{"rustc":9289672224281493355,"features":"[]","target":11861220859602393080,"profile":10216330754/;"	n
+rustc	target/debug/.fingerprint/rust-chess-d690b98964cda0fb/bin-rust-chess.json	/^{"rustc":9289672224281493355,"features":"[]","target":11861220859602393080,"profile":73091416868/;"	n
+rustc_fingerprint	target/.rustc_info.json	/^{"rustc_fingerprint":10772405062869203637,"outputs":{"8478739912462367707":{"success":false,"sta/;"	n
+rustc_vv	target/.rustdoc_fingerprint.json	/^{"rustc_vv":"rustc 1.58.1 (db9d1b20b 2022-01-20)\\nbinary: rustc\\ncommit-hash: db9d1b20bba1968c/;"	s
+rustflags	target/debug/.fingerprint/rust-chess-06b5baf3601adc08/bin-rust-chess.json	/^{"rustc":8020860686714880400,"features":"[]","target":11861220859602393080,"profile":92510136562/;"	a
+rustflags	target/debug/.fingerprint/rust-chess-6cd3205f69889a64/test-bin-rust-chess.json	/^{"rustc":9289672224281493355,"features":"[]","target":11861220859602393080,"profile":10216330754/;"	a
+rustflags	target/debug/.fingerprint/rust-chess-d690b98964cda0fb/bin-rust-chess.json	/^{"rustc":9289672224281493355,"features":"[]","target":11861220859602393080,"profile":73091416868/;"	a
+south_east_east	src/main.rs	/^    fn south_east_east(knight: u64) -> u64 {$/;"	P	implementation:Knight
+south_east_east	src/pieces.rs	/^    fn south_east_east(knight: u64) -> u64 {$/;"	P	implementation:Knight
+south_one	src/main.rs	/^    fn south_one(board: u64) -> u64 {$/;"	P	implementation:Board
+south_south_east	src/main.rs	/^    fn south_south_east(knight: u64) -> u64 {$/;"	P	implementation:Knight
+south_south_east	src/pieces.rs	/^    fn south_south_east(knight: u64) -> u64 {$/;"	P	implementation:Knight
+southeast_one	src/main.rs	/^    fn southeast_one(board: u64) -> u64 {$/;"	P	implementation:Board
+southwest_one	src/main.rs	/^    fn southwest_one(board: u64) -> u64 {$/;"	P	implementation:Board
+state	src/main.rs	/^    state: State,$/;"	m	struct:Board
+status	target/.rustc_info.json	/^{"rustc_fingerprint":10772405062869203637,"outputs":{"8478739912462367707":{"success":false,"sta/;"	s	object:outputs.17598535894874457435
+status	target/.rustc_info.json	/^{"rustc_fingerprint":10772405062869203637,"outputs":{"8478739912462367707":{"success":false,"sta/;"	s	object:outputs.2797684049618456168
+status	target/.rustc_info.json	/^{"rustc_fingerprint":10772405062869203637,"outputs":{"8478739912462367707":{"success":false,"sta/;"	s	object:outputs.8478739912462367707
+status	target/.rustc_info.json	/^{"rustc_fingerprint":10772405062869203637,"outputs":{"8478739912462367707":{"success":false,"sta/;"	s	object:outputs.931469667778813386
+status	target/.rustc_info.json	/^{"rustc_fingerprint":10772405062869203637,"outputs":{"8478739912462367707":{"success":false,"sta/;"	s	object:outputs.9666181950136269162
+stderr	target/.rustc_info.json	/^{"rustc_fingerprint":10772405062869203637,"outputs":{"8478739912462367707":{"success":false,"sta/;"	s	object:outputs.17598535894874457435
+stderr	target/.rustc_info.json	/^{"rustc_fingerprint":10772405062869203637,"outputs":{"8478739912462367707":{"success":false,"sta/;"	s	object:outputs.2797684049618456168
+stderr	target/.rustc_info.json	/^{"rustc_fingerprint":10772405062869203637,"outputs":{"8478739912462367707":{"success":false,"sta/;"	s	object:outputs.8478739912462367707
+stderr	target/.rustc_info.json	/^{"rustc_fingerprint":10772405062869203637,"outputs":{"8478739912462367707":{"success":false,"sta/;"	s	object:outputs.931469667778813386
+stderr	target/.rustc_info.json	/^{"rustc_fingerprint":10772405062869203637,"outputs":{"8478739912462367707":{"success":false,"sta/;"	s	object:outputs.9666181950136269162
+stdout	target/.rustc_info.json	/^{"rustc_fingerprint":10772405062869203637,"outputs":{"8478739912462367707":{"success":false,"sta/;"	s	object:outputs.17598535894874457435
+stdout	target/.rustc_info.json	/^{"rustc_fingerprint":10772405062869203637,"outputs":{"8478739912462367707":{"success":false,"sta/;"	s	object:outputs.2797684049618456168
+stdout	target/.rustc_info.json	/^{"rustc_fingerprint":10772405062869203637,"outputs":{"8478739912462367707":{"success":false,"sta/;"	s	object:outputs.8478739912462367707
+stdout	target/.rustc_info.json	/^{"rustc_fingerprint":10772405062869203637,"outputs":{"8478739912462367707":{"success":false,"sta/;"	s	object:outputs.931469667778813386
+stdout	target/.rustc_info.json	/^{"rustc_fingerprint":10772405062869203637,"outputs":{"8478739912462367707":{"success":false,"sta/;"	s	object:outputs.9666181950136269162
+stm	src/main.rs	/^    stm: usize,$/;"	m	struct:State
+success	target/.rustc_info.json	/^{"rustc_fingerprint":10772405062869203637,"outputs":{"8478739912462367707":{"success":false,"sta/;"	b	object:outputs.17598535894874457435
+success	target/.rustc_info.json	/^{"rustc_fingerprint":10772405062869203637,"outputs":{"8478739912462367707":{"success":false,"sta/;"	b	object:outputs.2797684049618456168
+success	target/.rustc_info.json	/^{"rustc_fingerprint":10772405062869203637,"outputs":{"8478739912462367707":{"success":false,"sta/;"	b	object:outputs.8478739912462367707
+success	target/.rustc_info.json	/^{"rustc_fingerprint":10772405062869203637,"outputs":{"8478739912462367707":{"success":false,"sta/;"	b	object:outputs.931469667778813386
+success	target/.rustc_info.json	/^{"rustc_fingerprint":10772405062869203637,"outputs":{"8478739912462367707":{"success":false,"sta/;"	b	object:outputs.9666181950136269162
+successes	target/.rustc_info.json	/^{"rustc_fingerprint":10772405062869203637,"outputs":{"8478739912462367707":{"success":false,"sta/;"	o
+target	target/debug/.fingerprint/rust-chess-06b5baf3601adc08/bin-rust-chess.json	/^{"rustc":8020860686714880400,"features":"[]","target":11861220859602393080,"profile":92510136562/;"	n
+target	target/debug/.fingerprint/rust-chess-6cd3205f69889a64/test-bin-rust-chess.json	/^{"rustc":9289672224281493355,"features":"[]","target":11861220859602393080,"profile":10216330754/;"	n
+target	target/debug/.fingerprint/rust-chess-d690b98964cda0fb/bin-rust-chess.json	/^{"rustc":9289672224281493355,"features":"[]","target":11861220859602393080,"profile":73091416868/;"	n
+valid_attacks	src/main.rs	/^    fn valid_attacks(&self) -> u64;$/;"	P	interface:Moves
+valid_moves	src/main.rs	/^    fn valid_moves(&self) -> u64;$/;"	P	interface:Moves
+west_one	src/main.rs	/^    fn west_one(board: u64) -> u64 {$/;"	P	implementation:Board
+white_double_push	src/main.rs	/^    fn white_double_push(pawn: u64, empty_squares: u64) -> u64 {$/;"	P	implementation:Pawn
+white_double_push	src/pieces.rs	/^    fn white_double_push(pawn: u64, empty: u64) -> u64 {$/;"	P	implementation:Pawn
+white_double_pushable	src/main.rs	/^    fn white_double_pushable(white_pawns: u64, empty_squares: u64) {$/;"	P	implementation:Pawn
+white_push	src/main.rs	/^    fn white_push(pawn: u64, empty_squares: u64) -> u64 {$/;"	P	implementation:Pawn
+white_push	src/pieces.rs	/^    fn white_push(pawn: u64, empty: u64) -> u64 {$/;"	P	implementation:Pawn
+white_pushable	src/main.rs	/^    fn white_pushable(white_pawns: u64, empty_squares: u64) {$/;"	P	implementation:Pawn
