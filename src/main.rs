@@ -7,7 +7,7 @@ pub struct BitBoard(pub u64);
 /// A Board contains everything necessary to calculate moves and evaluate a position
 #[derive(Debug, Clone, Hash, PartialEq, Eq)]
 pub struct Board {
-    //Board for each side
+    //BitBoard for each side
     bb_sides: [BitBoard; 2],
     //BitBoards for all pieces and each side
     bb_pieces: [[BitBoard; 6]; 2],
@@ -16,56 +16,73 @@ pub struct Board {
 }
 impl Board {
     // Bit masks
-    pub const A_FILE: u64 = 0xfefefefefefefefe;
-    pub const H_FILE: u64 = 0x7f7f7f7f7f7f7f7f;
-    pub const EMPTY: u64 = 0;
+    pub const EMPTY: u64 = 0x0000000000000000;
+    pub const A_FILE: u64 = 0x8080808080808080;
+    pub const B_FILE: u64 = 0x4040404040404040;
+    pub const C_FILE: u64 = 0x2020202020202020;
+    pub const D_FILE: u64 = 0x1010101010101010;
+    pub const E_FILE: u64 = 0x808080808080808;
+    pub const F_FILE: u64 = 0x404040404040404;
+    pub const G_FILE: u64 = 0x202020202020202;
+    pub const H_FILE: u64 = 0x101010101010101;
     pub const RANK_1: u64 = 0x00000000000000FF;
+    pub const RANK_2: u64 = 0x000000000000FF00;
+    pub const RANK_3: u64 = 0x0000000000FF0000;
     pub const RANK_4: u64 = 0x00000000FF000000;
     pub const RANK_5: u64 = 0x000000FF00000000;
+    pub const RANK_6: u64 = 0x0000FF0000000000;
+    pub const RANK_7: u64 = 0x00FF000000000000;
     pub const RANK_8: u64 = 0xFF00000000000000;
     pub const A1_H8_DIAGONAL: u64 = 0x8040201008040201;
     pub const H1_A8_ANTIDIAGONAL: u64 = 0x0102040810204080;
     pub const LIGHT_SQUARES: u64 = 0x55AA55AA55AA55AA;
     pub const DARK_SQUARES: u64 = 0xAA55AA55AA55AA55;
 
+    ///Shift board northwest one square
     fn northwest_one(board: u64) -> u64 {
         (board << 7) & !Board::H_FILE
     }
+    ///Shift board north one square
     fn north_one(board: u64) -> u64 {
         board << 8
     }
+    ///Shift board northeast one square
     fn northeast_one(board: u64) -> u64 {
         (board << 9) & !Board::A_FILE
     }
+    ///Shift board west one square
     fn west_one(board: u64) -> u64 {
         (board >> 1) & !Board::H_FILE
     }
+    ///Shift board east one square
     fn east_one(board: u64) -> u64 {
         (board << 1) & !Board::A_FILE
     }
+    ///Shift board southwest one square
     fn southwest_one(board: u64) -> u64 {
         (board >> 9) & !Board::H_FILE
     }
+    ///Shifrt board south one square
     fn south_one(board: u64) -> u64 {
         board >> 8
     }
+    ///Shift board southeast one square
     fn southeast_one(board: u64) -> u64 {
         (board >> 7) & !Board::A_FILE
     }
-
+    ///Rotate board left
     fn rotate_left(board: u64, s: i32) -> u64 {
         (board << s) | (board >> (64 - s))
     }
+    ///Rotate board right
     fn rotate_right(board: u64, s: i32) -> u64 {
         (board >> s) | (board << (64 - s))
     }
 
 }
-
-/// Trait for piece movement shared methods
-trait Moves {
-    fn valid_moves(&self) -> u64;
-    fn valid_attacks(&self) -> u64;
+impl Default for Board {
+    fn default() -> Self {
+    }
 }
 
 /// Side labels
@@ -74,7 +91,6 @@ impl Sides {
     pub const WHITE: usize = 0;
     pub const BLACK: usize = 1;
 }
-
 
 /// Piece BitBoard index labels
 pub struct Pieces;
@@ -98,7 +114,7 @@ pub struct State {
 
 /// Castling rights are stored in a ['u8'], which is divided into the following parts:
 /// ```text
-/// 0 1 0 1   1                 1                0                  1
+/// 0 1 0 1   0                 1                0                  1
 /// ^^^^^^^   ^                 ^                ^                  ^
 /// unused    Black queen side  Black king side  White queen side   White king side
 /// ```
@@ -162,51 +178,175 @@ pub enum SquareLabels {
 ///Pawn structure
 pub struct Pawn;
 impl Pawn {
+    //Bit masks
+    pub const WHITE_DEFAULT: u64 = Board::RANK_2;
+    pub const BLACK_DEFAULT: u64 = Board::RANK_7;
+
+    ///Push white pawn by one square
     fn white_push(pawn: u64, empty_squares: u64) -> u64 {
-        (pawn << 8) & empty_squares
+        Board::north_one(pawn) & empty_squares
     }
+    ///Push white pawn by two squares
     fn white_double_push(pawn: u64, empty_squares: u64) -> u64 {
         let single_pushes: u64 = Pawn::white_push(pawn, empty_squares);
-        (single_pushes << 8) & empty_squares & Board::RANK_4
+        Board::north_one(pawn) & empty_squares & Board::RANK_4
     }
+    ///Push black pawn by one square
     fn black_push(pawn: u64, empty_squares: u64) -> u64 {
-        pawn >> 8 & empty_squares
+        Board::south_one(pawn) & empty_squares
     } 
+    ///Push black pawn by two squares
     fn black_double_push(pawn: u64, empty_squares: u64) -> u64 {
         let single_pushes: u64 = Pawn::black_push(pawn, empty_squares);
-        (single_pushes >> 8) & empty_squares & Board::RANK_4
+        Board::south_one(pawn) & empty_squares & Board::RANK_4
     }
-    fn white_pushable(white_pawns: u64, empty_squares: u64) {
+    ///White pawns that can be pushed
+    fn white_pushable(white_pawns: u64, empty_squares: u64) -> u64 {
+        Board::south_one(empty_squares) & white_pawns
     }
-    fn white_double_pushable(white_pawns: u64, empty_squares: u64) {
+    ///White pawns that can be double pushed
+    fn white_double_pushable(white_pawns: u64, empty_squares: u64) -> u64 {
+        let empty_rank3 = Board::south_one(empty_squares & Board::RANK_4) & empty_squares;
+        Pawn::white_pushable(white_pawns, empty_rank3)
     }
-    fn black_pushable(black_pawns: u64, empty_squares: u64) {
+    ///Black pawns that can be pushed
+    fn black_pushable(black_pawns: u64, empty_squares: u64) -> u64 {
+        Board::north_one(empty_squares) & black_pawns
     }
-    fn black_double_pushable(black_pawns: u64, empty_squares: u64) {
+    ///Black pawns that can be double pushed
+    fn black_double_pushable(black_pawns: u64, empty_squares: u64) -> u64 {
+        let empty_rank3 = Board::north_one(empty_squares & Board::RANK_4) & empty_squares;
+        Pawn::black_pushable(black_pawns, empty_rank3)
     }
+    ///White pawn east attacks
+    fn white_east_attacks(white_pawns: u64) -> u64 {
+        Board::northeast_one(white_pawns)
+    }
+    ///White pawn west attacks
+    fn white_west_attacks(white_pawns: u64) -> u64 {
+        Board::northeast_one(white_pawns)
+    }
+    ///Black pawn east attacks
+    fn black_east_attacks(black_pawns: u64) -> u64 {
+        Board::southeast_one(black_pawns)
+    }
+    ///Black pawn west attacks
+    fn black_west_attacks(black_pawns: u64) -> u64 {
+        Board::southwest_one(black_pawns)
+    }
+    ///All white pawn attacks
+    fn white_any_attacks(white_pawns: u64) -> u64 {
+        Pawn::white_west_attacks(white_pawns) | Pawn::white_east_attacks(white_pawns)
+    }
+    ///All black pawn attacks
+    fn black_any_attacks(black_pawns: u64) -> u64 {
+        Pawn::black_west_attacks(black_pawns) | Pawn::black_east_attacks(black_pawns)
+    }
+    ///White pawn double attacks
+    fn white_double_attacks(white_pawns: u64) -> u64 {
+        Pawn::white_east_attacks(white_pawns) & Pawn::white_west_attacks(white_pawns)
+    }
+    ///White pawn single attacks
+    fn white_single_attacks(white_pawns: u64) -> u64 {
+        Pawn::white_east_attacks(white_pawns) ^ Pawn::white_west_attacks(white_pawns)
+    }
+    ///Black pawn double attacks
+    fn black_double_attacks(black_pawns: u64) -> u64 {
+        Pawn::black_east_attacks(black_pawns) & Pawn::black_west_attacks(black_pawns)
+    }
+    ///Black pawn single attacks
+    fn black_single_attacks(black_pawns: u64) -> u64 {
+        Pawn::black_east_attacks(black_pawns) ^ Pawn::black_west_attacks(black_pawns)
+    }
+
+    fn white_safe_squares(white_pawns: u64, black_pawns: u64) -> u64 {
+    }
+    
+    fn black_safe_squares(black_pawns: u64, white_pawns: u64) -> u64 {
+    }
+
+    fn white_capturable_east(white_pawns: u64, black_pawns: u64) -> u64 {
+        Pawn::white_east_attacks(white_pawns) & black_pawns
+    }
+    fn white_capturable_west(white_pawns: u64, black_pawns: u64) -> u64 {
+        Pawn::white_west_attacks(white_pawns) & black_pawns
+    }
+    fn white_capturable_any(white_pawns: u64, black_pawns: u64) -> u64 {
+        Pawn::white_capturable_west(white_pawns, black_pawns) | Pawn::white_capturable_east(white_pawns, black_pawns)
+    }
+
+    fn black_capturable_east(black_pawns: u64, white_pawns: u64) -> u64 {
+        Pawn::black_east_attacks(black_pawns) & white_pawns
+    }
+    fn black_capturable_west(black_pawns: u64, white_pawns: u64) -> u64 {
+        Pawn::black_west_attacks(black_pawns) & white_pawns
+    }
+    fn black_capturable_any(black_pawns: u64, white_pawns: u64) -> u64 {
+        Pawn::black_capturable_east(black_pawns, white_pawns) | Pawn::black_capturable_west(black_pawns, white_pawns)
+    }
+}
+
+///Rook structure
+pub struct Rook;
+impl Rook {
+    pub const WHITE_DEFAULT: u64 = (Board::RANK_1 & Board::A_FILE) | (Board::RANK_1 & Board::H_FILE);
+    pub const BLACK_DEFAULT: u64 = (Board::RANK_8 & Board::A_FILE) | (Board::RANK_8 & Board::H_FILE);
 }
 
 ///Knight structure
 pub struct Knight;
 impl Knight {
-    fn north_north_west(knight: u64) -> u64 {
-        knight << 17
+    pub const WHITE_DEFAULT: u64 = 0x42;
+    pub const BLACK_DEFAULT: u64 = 0x4200000000000000;
+
+    fn north_north_east(knight: u64) -> u64 {
+        (knight << 15) & !Board::A_FILE
     }
     fn north_east_east(knight: u64) -> u64 {
-        knight << 10
+        (knight << 10) & !(Board::A_FILE | Board::B_FILE)
     }
     fn south_east_east(knight: u64) -> u64 {
-        knight >> 6
+        (knight >> 6) & !(Board::A_FILE | Board::B_FILE)
     }
     fn south_south_east(knight: u64) -> u64 {
-        knight >> 15
+        (knight >> 15) & !Board::A_FILE
     }
     fn north_north_west(knight: u64) -> u64 {
-        knight << 15
+        (knight << 17) & !Board::H_FILE
     }
     fn north_west_west(knight: u64) -> u64 {
-        knight 
+        (knight << 6) & !(Board::G_FILE | Board::H_FILE)
     }
+    fn south_south_west(knight: u64) -> u64 {
+        (knight >> 17) & !Board::H_FILE
+    }
+    fn attacks(knights: u64) -> u64 {
+        let east: u64 = Board::east_one(knights);
+        let west: u64 = Board::west_one(knights);
+        let attacks: u64 = ((east | west) << 16) | ((east | west) >> 16);
+    }
+
+}
+
+///Bishop structure
+pub struct Bishop;
+impl Bishop {
+    pub const WHITE_DEFAULT: u64 = 0x24;
+    pub const BLACK_DEFAULT: u64 = 2400000000000000;
+}
+
+///Queen structure
+pub struct Queen;
+impl Queen {
+    pub const WHITE_DEFAULT: u64 = 0x10;
+    pub const BLACK_DEFAULT: u64 = 0x800000000000000;
+}
+
+///King structure
+pub struct King;
+impl King {
+    pub const WHITE_DEFAULT: u64 = 0x8;
+    pub const BLACK_DEFAULT: u64 = 0x1000000000000000;
 }
 
 fn main() {
