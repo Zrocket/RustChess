@@ -9,7 +9,7 @@ use super::traits::Piece;
 /// ```
 ///
 pub struct King {
-    piece: u64,
+    bboard: u64,
     side: board::Side
 }
 
@@ -21,13 +21,13 @@ impl King {
         match side {
             board::Side::White => {
                 Self {
-                    piece: King::WHITE_DEFAULT,
+                    bboard: King::WHITE_DEFAULT,
                     side
                 }
             }
             board::Side::Black => {
                 Self {
-                    piece: King::BLACK_DEFAULT,
+                    bboard: King::BLACK_DEFAULT,
                     side
                 }
             }
@@ -36,19 +36,23 @@ impl King {
 }
 
 impl Piece for King {
-    fn bboard(&self) -> u64 {
-        self.piece
-    }
 
     fn moves(&self) -> u64 {
-        board::north_one(self.piece) | board::west_one(self.piece) | board::east_one(self.piece) |
-        board::south_one(self.piece) | board::northwest_one(self.piece) | board::northeast_one(self.piece) |
-        board::southwest_one(self.piece) | board::southeast_one(self.piece)
+        board::north_one(self.bboard) | board::west_one(self.bboard) | board::east_one(self.bboard) |
+        board::south_one(self.bboard) | board::northwest_one(self.bboard) | board::northeast_one(self.bboard) |
+        board::southwest_one(self.bboard) | board::southeast_one(self.bboard)
     }
 
     fn attacks(&self) -> u64 {
-        board::north_one(self.piece) | board::west_one(self.piece) | board::east_one(self.piece) |
-        board::south_one(self.piece) | board::northwest_one(self.piece) | board::northeast_one(self.piece) |
-        board::southwest_one(self.piece) | board::southeast_one(self.piece)
+        self.moves()
+    }
+}
+
+#[cfg(test)]
+mod test {
+    use super::*;
+
+    #[test]
+    fn test_king() {
     }
 }

@@ -1,55 +1,57 @@
 use std::{fmt, ops};
 use super::traits::Piece;
-use super::board;
+use super::board::{self, RAY_NORTH, RAY_EAST, RAY_SOUTH, RAY_WEST};
 
-/// [short explanation of what the item does]
+/// A complete set of black and white Rooks
 ///
 /// Example
 /// ```
 /// ```
 ///
-/// # [OPTIONAL: more explanations and code examples in case some specific
-/// # cases have to be explained in details]
 pub struct RookSet {
-    pieces: [Rook; 2],
+    bboards: [Rook; 2],
     side: board::Side
 }
 
 impl Piece for RookSet {
-    fn bboard(&self) -> u64 {
-        let mut set: u64 = 0x00;
-        for rook in self.pieces.iter() {
-            set = set & rook.bboard();
-        }
-        set
-    }
 
+    /// Returns a bitboard of all valid Rook Moves
+    ///
+    /// Example
+    /// ```
+    /// ```
+    ///
     fn moves(&self) -> u64 {
         let mut set: u64 = 0x00;
-        for rook in self.pieces.iter() {
+        for rook in self.bboards.iter() {
             set = set & rook.moves();
         }
         set
     }
 
+    /// Returns a bitboard of all valid Rook attacks
+    ///
+    /// Example
+    /// ```
+    /// ```
+    ///
     fn attacks(&self) -> u64 {
         let mut set: u64 = 0x00;
-        for rook in self.pieces.iter() {
+        for rook in self.bboards.iter() {
             set = set & rook.attacks();
         }
         set
     }
 }
 
-///Rook structure
-/// [short explanation of what the item does]
+/// Rook structure
 ///
 /// Example
 /// ```
 /// ```
 ///
 pub struct Rook {
-    piece: u64,
+    bboard: u64,
     side: board::Side
 }
 
@@ -57,17 +59,23 @@ impl Rook {
     pub const WHITE_DEFAULT: u64 = (board::RANK_1 & board::A_FILE) | (board::RANK_1 & board::H_FILE);
     pub const BLACK_DEFAULT: u64 = (board::RANK_8 & board::A_FILE) | (board::RANK_8 & board::H_FILE);
 
+    /// Returns a new Rook bboard of the desiganted side
+    ///
+    /// Example
+    /// ```
+    /// ```
+    ///
     pub fn new(&self, side: board::Side) -> Self {
         match side {
             board::Side::White => {
                 Self {
-                    piece: Rook::WHITE_DEFAULT,
+                    bboard: Rook::WHITE_DEFAULT,
                     side
                 }
             }
             board::Side::Black => {
                 Self {
-                    piece: Rook::BLACK_DEFAULT,
+                    bboard: Rook::BLACK_DEFAULT,
                     side
                 }
             }
@@ -76,15 +84,39 @@ impl Rook {
 }
 
 impl Piece for Rook {
-    fn bboard(&self) -> &u64 {
-        &self.piece
+
+    /// Return a bitboard of all valid moves
+    ///
+    /// Example
+    /// ```
+    /// ```
+    ///
+    /// # [OPTIONAL: more explanations and code examples in case some specific
+    /// # cases have to be explained in details]
+    fn moves(&self) -> u64 {
+        let index = board::bitscan(self.bboard).unwrap() as usize;
+
+        RAY_NORTH[index] | RAY_EAST[index] | RAY_SOUTH[index] | RAY_WEST[index]
     }
 
-    fn moves(&self) -> &u64 {
+    /// Return a bitboard of all vlalid attacks
+    ///
+    /// Example
+    /// ```
+    /// ```
+    ///
+    /// # [OPTIONAL: more explanations and code examples in case some specific
+    /// # cases have to be explained in details]
+    fn attacks(&self) -> u64 {
         todo!()
     }
+}
 
-    fn attacks(&self) -> &u64 {
-        todo!()
+#[cfg(test)]
+mod test {
+    use super::*;
+
+    #[test]
+    fn test_rook() {
     }
 }

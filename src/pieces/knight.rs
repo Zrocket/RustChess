@@ -11,31 +11,24 @@ use super::traits::Piece;
 /// # [OPTIONAL: more explanations and code examples in case some specific
 /// # cases have to be explained in details]
 pub struct KnightSet {
-    pieces: [Knight; 2],
+    bboards: [Knight; 2],
     side: board::Side,
 }
 
 impl Piece for KnightSet {
-    fn bboard(&self) -> u64 {
-        let mut set: u64 = 0x00;
-        for knight in self.pieces.iter() {
-            set = set & knight.bboard();
-        }
-        set
-    }
 
     fn moves(&self) -> u64 {
         let mut set: u64 = 0x00;
-        for knight in self.pieces.iter() {
+        for knight in self.bboards.iter() {
             set = set & knight.moves();
         }
         set
     }
 
-    fn attacks(&self) -> u64 {
+    fn attacks(&self, blockers: u64) -> u64 {
         let mut set: u64 = 0x00;
-        for knight in self.pieces.iter() {
-            set = set & knight.attacks();
+        for knight in self.bboards.iter() {
+            set = set & knight.attacks(blockers);
         }
         set
     }
@@ -48,7 +41,7 @@ impl Piece for KnightSet {
 /// ```
 ///
 pub struct Knight {
-    piece: u64,
+    bboard: u64,
     side: board::Side,
 }
 impl Knight {
@@ -56,35 +49,32 @@ impl Knight {
     pub const BLACK_DEFAULT: u64 = 0x4200000000000000;
 
     fn north_north_east(&self) -> u64 {
-        (self.piece << 15) & !board::A_FILE
+        (self.bboard << 15) & !board::A_FILE
     }
     fn north_east_east(&self) -> u64 {
-        (self.piece << 10) & !(board::A_FILE | board::B_FILE)
+        (self.bboard << 10) & !(board::A_FILE | board::B_FILE)
     }
     fn south_east_east(&self) -> u64 {
-        (self.piece >> 6) & !(board::A_FILE | board::B_FILE)
+        (self.bboard >> 6) & !(board::A_FILE | board::B_FILE)
     }
     fn south_south_east(&self) -> u64 {
-        (self.piece >> 15) & !board::A_FILE
+        (self.bboard >> 15) & !board::A_FILE
     }
     fn north_north_west(&self) -> u64 {
-        (self.piece << 17) & !board::H_FILE
+        (self.bboard << 17) & !board::H_FILE
     }
     fn north_west_west(&self) -> u64 {
-        (self.piece << 6) & !(board::G_FILE | board::H_FILE)
+        (self.bboard << 6) & !(board::G_FILE | board::H_FILE)
     }
     fn south_south_west(&self) -> u64 {
-        (self.piece >> 17) & !board::H_FILE
+        (self.bboard >> 17) & !board::H_FILE
     }
     fn fill(&self) -> u64 {
-        Knight::attacks(self) | self.piece
+        Knight::attacks(self) | self.bboard
     }
 }
 
 impl Piece for Knight {
-    fn bboard(&self) -> u64 {
-        self.piece
-    }
 
     fn moves(&self) -> u64 {
         Knight::north_north_east(self) | Knight::north_east_east(self) | Knight::south_east_east(self) |
@@ -92,9 +82,16 @@ impl Piece for Knight {
         Knight::south_south_west(self)
     }
 
-    fn attacks(&self) -> u64 {
-        Knight::north_north_east(self) | Knight::north_east_east(self) | Knight::south_east_east(self) |
-        Knight::south_south_east(self) | Knight::north_north_west(self) | Knight::north_west_west(self) | 
-        Knight::south_south_west(self)
+    fn attacks(&self, blockers: u64) -> u64 {
+        self.moves()
+    }
+}
+
+#[cfg(test)]
+mod test {
+    use super::*;
+
+    #[test]
+    fn test_knight() {
     }
 }

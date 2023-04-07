@@ -1,8 +1,10 @@
 use std::fmt;
-pub use board::*;
+use pieces::*;
 
-pub mod board;
 pub mod pieces;
+
+pub struct Game {
+}
 
 /// Contains castling_rights, move_clocks, en_passant_square if possible and the side to move
 ///
@@ -13,7 +15,7 @@ pub mod pieces;
 #[derive(Debug, Clone, Hash, Eq, PartialEq)]
 pub struct State {
     castling_rights: CastlingRights,
-    en_passant_square: Option<Square>,
+    en_passant_square: Option<board::Square>,
     half_move_counter: u8,
     stm: usize,
 }
@@ -55,6 +57,7 @@ impl Default for CastlingRights {
 /// ```
 ///
 pub struct Castling;
+
 impl Castling {
     pub const NO_CASTLING: u8   = 0;
     pub const WHITE_00: u8      = 0b00000001;
@@ -62,11 +65,11 @@ impl Castling {
     pub const BLACK_00: u8      = 0b00000100;
     pub const BLACK_000: u8     = 0b00001000;
 
-    pub const KING_SIDE: u8 = Self::BLACK_00 | Self::WHITE_00;
-    pub const QUEEN_SIDE: u8 = Self::BLACK_000 | Self::WHITE_000;
-    pub const WHITE_CASTLING: u8 = Self::WHITE_00 | Self::WHITE_000;
-    pub const BLACK_CASTLING: u8 = Self::BLACK_00 | Self::BLACK_000;
-    pub const ANY_CASTLING: u8 = Self::WHITE_CASTLING | Self::BLACK_CASTLING;
+    pub const KING_SIDE: u8         = Self::BLACK_00 | Self::WHITE_00;
+    pub const QUEEN_SIDE: u8        = Self::BLACK_000 | Self::WHITE_000;
+    pub const WHITE_CASTLING: u8    = Self::WHITE_00 | Self::WHITE_000;
+    pub const BLACK_CASTLING: u8    = Self::BLACK_00 | Self::BLACK_000;
+    pub const ANY_CASTLING: u8      = Self::WHITE_CASTLING | Self::BLACK_CASTLING;
 }
 
 fn main() {

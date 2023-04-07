@@ -2,32 +2,43 @@ use std::{fmt, ops::*};
 use super::traits::Piece;
 use super::board;
 
+/// A complete set of black and white pawns
+///
+/// Example
+/// ```
+/// ```
+///
 pub struct PawnSet {
-    pieces: [Pawn; 2],
+    bboards: [Pawn; 2],
     side: board::Side,
 }
 
 impl Piece for PawnSet {
-    fn bboard(&self) -> u64 {
-        let mut set: u64 = 0x00;
-        for pawn in self.pieces.iter() {
-            set = set & pawn.bboard();
-        }
-        set
-    }
 
+    /// Returns a bitboard of all valid moves in a PawnSet
+    ///
+    /// Example
+    /// ```
+    /// ```
+    ///
     fn moves(&self) -> u64 {
         let mut set: u64 = 0x00;
-        for pawn in self.pieces.iter() {
+        for pawn in self.bboards.iter() {
             set = set & pawn.moves();
         }
         set
     }
 
-    fn attacks(&self) -> u64 {
+    /// Returns a bitboard of all valid attacks in a PawnSet
+    ///
+    /// Example
+    /// ```
+    /// ```
+    ///
+    fn attacks(&self, blockers: u64) -> u64 {
         let mut set: u64 = 0x00;
-        for pawn in self.pieces.iter() {
-            set = set & pawn.attacks();
+        for pawn in self.bboards.iter() {
+            set = set & pawn.attacks(blockers);
         }
         set
     }
@@ -39,28 +50,44 @@ impl Piece for PawnSet {
 /// ``` ```
 ///
 pub struct Pawn {
-    piece: u64,
-    side: board::Side
+    pub bboard: u64,
+    pub side: board::Side,
 }
 
 impl Piece for Pawn {
-    fn bboard(&self) -> u64 {
-        self.piece
-    }
 
+    /// Returns a bitboard of all valid moves
+    ///
+    /// Example
+    /// ```
+    /// ```
+    ///
     fn moves(&self) -> u64 {
         self.push() | self.double_push()
     }
 
-    fn attacks(&self) -> u64 {
+    /// Returns a bitboard of all valid attacks
+    ///
+    /// Example
+    /// ```
+    /// ```
+    ///
+    fn attacks(&self, blockers: u64) -> u64 {
         self.west_attacks() | self.east_attacks()
     }
 }
 
 impl Pawn {
+
+    /// Create a new Pawn
+    ///
+    /// Example
+    /// ```
+    /// ```
+    ///
     pub fn new(pos: u64, side: board::Side) -> Self {
         Pawn {
-            piece: pos,
+            bboard: pos,
             side,
         }
     }
@@ -69,42 +96,38 @@ impl Pawn {
     pub const WHITE_DEFAULT: u64 = board::RANK_2;
     pub const BLACK_DEFAULT: u64 = board::RANK_7;
 
-    /// [short explanation of what the item does]
+    /// Return a bitboard of a side relevant pawn push
     ///
     /// Example
     /// ```
     /// ```
     ///
-    /// # [OPTIONAL: more explanations and code examples in case some specific
-    /// # cases have to be explained in details]
     pub fn push(&self) -> u64 {
         match self.side {
-            board::Side::White => { board::north_one(self.piece) }
-            board::Side::Black => { board::south_one(self.piece) }
+            board::Side::White => { board::north_one(self.bboard) }
+            board::Side::Black => { board::south_one(self.bboard) }
         }
     }
 
-    /// [short explanation of what the item does]
+    /// Returns a bitboard of a side relevant pawn double push
     ///
     /// Example
     /// ```
     /// ```
     ///
-    /// # [OPTIONAL: more explanations and code examples in case some specific
-    /// # cases have to be explained in details]
     pub fn double_push(&self) -> u64 {
         let single_push: u64 = self.push();
         match self.side {
             board::Side::White => {
-                board::north_one(single_push) & board::RANK_4
+                board::north_one(single_push)
             }
             board::Side::Black => {
-                board::south_one(single_push) & board::RANK_4
+                board::south_one(single_push)
             }
         }
     }
 
-    /// Pawn west attacks
+    /// Returns a bitboard of valid west attacks
     ///
     /// Example
     /// ```
@@ -112,21 +135,33 @@ impl Pawn {
     ///
     pub fn west_attacks(&self) -> u64 {
         match self.side {
-            board::Side::White => { board::northeast_one(self.piece) }
-            board::Side::Black => { board::southwest_one(self.piece) }
+            board::Side::White => { board::northeast_one(self.bboard) }
+            board::Side::Black => { board::southwest_one(self.bboard) }
         }
     }
 
-    /// Pawn east attacks
+    /// Returns a bitboard of valid east attacks
     ///
     /// Example
     /// ```
     /// ```
     ///
     pub fn east_attacks(&self) -> u64 {
-        match self.side() {
-            board::Side::White => { board::northeast_one(self.piece) }
-            board::Side::Black => { board::southeast_one(self.piece) }
+        match self.side {
+            board::Side::White => { board::northeast_one(self.bboard) }
+            board::Side::Black => { board::southeast_one(self.bboard) }
         }
+    }
+}
+
+#[cfg(test)]
+mod test {
+    use super::*;
+
+    #[test]
+    fn test_pawn() {
+        let pawn = Pawn::new(0x1, board::Side::White);
+        assert_eq!(pawn.push(), 0x100 as u64);
+        assert_eq!(pawn.double_push(), 0x10000 as u64);
     }
 }
