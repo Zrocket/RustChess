@@ -1,38 +1,224 @@
 use std::collections::HashMap;
-use lazy_static::lazy_static;
+use bitflags::bitflags;
+use super::{pawn::PawnSet, knight::KnightSet, bishop::BishopSet, queen::Queen, king::King, traits::Piece, rook::RookSet};
 
-/// Represents a single square on the board.
-/// # Representation
-/// 1 is A1
-/// 2 is B1
-/// 64 is H8
-///
-/// Example
-/// ```
-/// ```
-///
-#[derive(Hash, PartialEq, Eq, Debug, Clone)]
-pub struct Square(usize);
-
-/// Labels for every ['Square'] on the board.
-///
-/// Example
-/// ```
-/// ```
-///
-#[repr(usize)]
-#[rustfmt::skip]
-pub enum SquareLabel {
-    None,
-    A1, B1, C1, D1, E1, F1, G1, H1,
-    A2, B2, C2, D2, E2, F2, G2, H2,
-    A3, B3, C3, D3, E3, F3, G3, H3,
-    A4, B4, C4, D4, E4, F4, G4, H4,
-    A5, B5, C5, D5, E5, F5, G5, H5,
-    A6, B6, C6, D6, E6, F6, G6, H6,
-    A7, B7, C7, D7, E7, F7, G7, H7,
-    A8, B8, C8, D8, E8, F8, G8, H8,
+bitflags! {
+    #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
+    pub struct BoardFlags: u32 {
+        const capture       = 0b000000000001;
+        const passant       = 0b000000000010;
+        const castle_king   = 0b000000000100;
+        const castle_queen  = 0b000000001000;
+        const pawn          = 0b000000010000;
+        const knight        = 0b000000100000;
+        const bishop        = 0b000001000000;
+        const rook          = 0b000010000000;
+        const queen         = 0b000100000000;
+        const white         = 0b001000000000;
+        const black         = 0b010000000000;
+        const promotion     = 0b100000000000;
+    }
 }
+
+pub struct Move {
+    pub from: usize,
+    pub to: usize,
+    pub flags: BoardFlags,
+}
+
+pub struct Board {
+    white: Player,
+    black: Player,
+}
+
+impl Default for Board {
+    fn default() -> Self {
+        Board {
+            white: Player::new(Side::White),
+            black: Player::new(Side::Black),
+        }
+    }
+}
+
+impl Board {
+    pub fn is_game_over(&self) -> bool {
+        if self.white.moves().len() == 0 || self.black.moves().len() == 0 {
+            return true;
+        }
+
+        false
+    }
+
+    pub fn evaluate(&self) -> i32 {
+        let mut score = 0;
+        0
+    }
+
+    pub fn moves(&self) -> Vec<Move> {
+        todo!()
+    }
+
+    pub fn count_pieces(&self, side: Side) {
+        match side {
+            Side::White => (),
+            Side::Black => (),
+        }
+    }
+}
+
+pub struct Player {
+    pawns: PawnSet,
+    knights: KnightSet,
+    bishops: BishopSet,
+    rooks: RookSet,
+    queen: Queen,
+    king: King,
+}
+
+impl Piece for Player {
+    fn moves(&self) -> Vec<Move> {
+        let mut moves: Vec<Move> = Vec::new();
+
+        moves.extend(self.pawns.moves());
+        moves.extend(self.knights.moves());
+        moves.extend(self.bishops.moves());
+        moves.extend(self.rooks.moves());
+        moves.extend(self.queen.moves());
+        moves.extend(self.king.moves());
+
+        moves
+    }
+
+    fn attacks(&self, blockers: u64) -> Vec<Move> {
+        let mut moves: Vec<Move> = Vec::new();
+
+        moves.extend(self.pawns.attacks(blockers));
+        moves.extend(self.knights.attacks(blockers));
+        moves.extend(self.bishops.attacks(blockers));
+        moves.extend(self.rooks.attacks(blockers));
+        moves.extend(self.queen.attacks(blockers));
+        moves.extend(self.king.attacks(blockers));
+
+        moves
+    }
+
+    fn piece_square_value(&self) -> i32 {
+        unimplemented!()
+    }
+
+    fn board(&self) -> u64 {
+        let mut board: u64 = 0;
+        board &= self.pawns.board();
+        board &= self.knights.board();
+        board &= self.bishops.board();
+        board &= self.rooks.board();
+        board &= self.queen.board();
+        board &= self.king.board();
+        board
+    }
+}
+
+impl Player {
+    pub fn new(side: Side) -> Self {
+        Player {
+            pawns: PawnSet::new(side),
+            knights: KnightSet::new(side),
+            bishops: BishopSet::new(side),
+            rooks: RookSet::new(side),
+            queen: Queen::new(side),
+            king: King::new(side),
+        }
+    }
+
+    pub fn evaluate(&self) -> i32 {
+        let mut score = 0;
+        score += self.pawns.evaluate();
+        score += self.knights.evaluate();
+        score += self.bishops.evaluate();
+        score += self.rooks.evaluate();
+        score += 9 * self.queen.piece_square_value();
+        score += self.king.piece_square_value();
+        score
+    }
+}
+
+/// Labels for every Square on the board.
+///
+/// Example
+/// ```
+/// ```
+///
+pub const A1: usize = 0;
+pub const B1: usize = 1;
+pub const C1: usize = 2;
+pub const D1: usize = 3;
+pub const E1: usize = 4;
+pub const F1: usize = 5;
+pub const G1: usize = 6;
+pub const H1: usize = 7;
+
+pub const A2: usize = 8;
+pub const B2: usize = 9;
+pub const C2: usize = 10;
+pub const D2: usize = 11;
+pub const E2: usize = 12;
+pub const F2: usize = 13;
+pub const G2: usize = 14;
+pub const H2: usize = 15;
+
+pub const A3: usize = 16;
+pub const B3: usize = 17;
+pub const C3: usize = 18;
+pub const D3: usize = 19;
+pub const E3: usize = 20;
+pub const F3: usize = 21;
+pub const G3: usize = 22;
+pub const H3: usize = 23;
+
+pub const A4: usize = 24;
+pub const B4: usize = 25;
+pub const C4: usize = 26;
+pub const D4: usize = 27;
+pub const E4: usize = 28;
+pub const F4: usize = 29;
+pub const G4: usize = 30;
+pub const H4: usize = 31;
+
+pub const A5: usize = 32;
+pub const B5: usize = 33;
+pub const C5: usize = 34;
+pub const D5: usize = 35;
+pub const E5: usize = 36;
+pub const F5: usize = 37;
+pub const G5: usize = 38;
+pub const H5: usize = 39;
+
+pub const A6: usize = 40;
+pub const B6: usize = 41;
+pub const C6: usize = 42;
+pub const D6: usize = 43;
+pub const E6: usize = 44;
+pub const F6: usize = 45;
+pub const G6: usize = 46;
+pub const H6: usize = 47;
+
+pub const A7: usize = 48;
+pub const B7: usize = 49;
+pub const C7: usize = 50;
+pub const D7: usize = 51;
+pub const E7: usize = 52;
+pub const F7: usize = 53;
+pub const G7: usize = 54;
+pub const H7: usize = 55;
+
+pub const A8: usize = 56;
+pub const B8: usize = 57;
+pub const C8: usize = 58;
+pub const D8: usize = 59;
+pub const E8: usize = 60;
+pub const F8: usize = 61;
+pub const G8: usize = 62;
+pub const H8: usize = 63;
 
 pub const POSITION_ARRAY: [u64; 64] = [
     0x1, 0x2, 0x4, 0x8, 0x10, 0x20, 0x40, 0x80,

@@ -1,6 +1,6 @@
 use std::{fmt, ops::*};
 use super::traits::Piece;
-use super::board;
+use super::board::{self, BoardFlags};
 
 /// A complete set of black and white pawns
 ///
@@ -9,7 +9,7 @@ use super::board;
 /// ```
 ///
 pub struct PawnSet {
-    bboards: [Pawn; 2],
+    bboards: Vec<Pawn>,
     side: board::Side,
 }
 
@@ -21,12 +21,14 @@ impl Piece for PawnSet {
     /// ```
     /// ```
     ///
-    fn moves(&self) -> u64 {
+    fn moves(&self) -> Vec<board::Move> {
+        let mut moves: Vec<board::Move> = Vec::new();
         let mut set: u64 = 0x00;
         for pawn in self.bboards.iter() {
-            set = set & pawn.moves();
+            moves.extend(pawn.moves());
         }
-        set
+
+        moves
     }
 
     /// Returns a bitboard of all valid attacks in a PawnSet
@@ -35,12 +37,59 @@ impl Piece for PawnSet {
     /// ```
     /// ```
     ///
-    fn attacks(&self, blockers: u64) -> u64 {
+    fn attacks(&self, blockers: u64) -> Vec<board::Move> {
+        let mut moves: Vec<board::Move> = Vec::new();
         let mut set: u64 = 0x00;
         for pawn in self.bboards.iter() {
-            set = set & pawn.attacks(blockers);
+            moves.extend(pawn.attacks(blockers));
         }
-        set
+
+        moves
+    }
+
+    fn piece_square_value(&self) -> i32 {
+        unimplemented!()
+    }
+
+    fn board(&self) -> u64 {
+        let mut board: u64 = 0;
+        for pawn in self.bboards {
+            board &= pawn.board();
+        }
+        board
+    }
+}
+
+impl PawnSet {
+    pub fn new(side: board::Side) -> Self {
+        let mut bboards: Vec<Pawn> = Vec::new();
+
+        match side {
+            board::Side::White => {
+                for i in board::A2..board::A3 {
+                    bboards.push(Pawn::new(board::POSITION_ARRAY[i], side));
+                }
+            },
+            board::Side::Black => {
+                for i in board::A7..board::A8 {
+                    bboards.push(Pawn::new(board::POSITION_ARRAY[i], side));
+                }
+            },
+        }
+
+        PawnSet {
+            bboards,
+            side,
+        }
+    }
+
+    pub fn evaluate(&self) -> i32 {
+        let mut score = 0;
+        for pawn in self.bboards {
+            score += 1 * pawn.piece_square_value();
+        }
+
+        score
     }
 }
 
@@ -62,8 +111,20 @@ impl Piece for Pawn {
     /// ```
     /// ```
     ///
-    fn moves(&self) -> u64 {
-        self.push() | self.double_push()
+    fn moves(&self) -> Vec<board::Move> {
+        let mut moves: Vec<board::Move> = Vec::new();
+        moves.push(board::Move {
+            from: self.bboard.trailing_zeros() as usize,
+            to: self.push().trailing_zeros() as usize,
+            flags: board::BoardFlags::empty(),
+        });
+        moves.push(board::Move {
+            from: self.bboard.trailing_zeros() as usize,
+            to: self.double_push().trailing_zeros() as usize,
+            flags: board::BoardFlags::empty(),
+        });
+
+        moves
     }
 
     /// Returns a bitboard of all valid attacks
@@ -72,12 +133,51 @@ impl Piece for Pawn {
     /// ```
     /// ```
     ///
-    fn attacks(&self, blockers: u64) -> u64 {
-        self.west_attacks() | self.east_attacks()
+    fn attacks(&self, blockers: u64) -> Vec<board::Move> {
+        let mut moves: Vec<board::Move> = Vec::new();
+
+        moves.push(board::Move {
+            from: self.bboard.trailing_zeros() as usize,
+            to: self.west_attacks().trailing_zeros() as usize,
+            flags: board::BoardFlags::empty(),
+        });
+        moves.push(board::Move {
+            from: self.bboard.trailing_zeros() as usize,
+            to: self.east_attacks().trailing_zeros() as usize,
+            flags: board::BoardFlags::empty(),
+        });
+
+        moves
     }
+
+    fn piece_square_value(&self) -> i32 {
+        match self.side {
+            board::Side::White => {
+                return Pawn::PAWN_TABLE[self.bboard.trailing_zeros() as usize]
+            },
+            board::Side::Black => {
+                return Pawn::PAWN_TABLE[63 - self.bboard.trailing_zeros() as usize]
+            }
+        }
+    }
+
+    fn board(&self) -> u64 {
+        self.bboard
+    }
+
 }
 
 impl Pawn {
+    pub const PAWN_TABLE: [i32; 64] = [
+    0,   0,   0,   0,   0,   0,   0,   0,
+    50, 50, 50, 50, 50, 50, 50, 50,
+    10, 10, 20, 30, 30, 20, 10, 10,
+    5,   5, 10, 25, 25, 10,  5,  5,
+    0,   0,   0, 20, 20,  0,  0,  0,
+    5,  -5,-10,  0,  0,-10, -5,  5,
+    5,  10, 10,-20,-20, 10, 10,  5,
+    0,   0,   0,   0,   0,   0,   0,   0
+    ];
 
     /// Create a new Pawn
     ///
@@ -116,15 +216,9 @@ impl Pawn {
     /// ```
     ///
     pub fn double_push(&self) -> u64 {
-        let single_push: u64 = self.push();
-        match self.side {
-            board::Side::White => {
-                board::north_one(single_push)
-            }
-            board::Side::Black => {
-                board::south_one(single_push)
-            }
-        }
+        self.push();
+        self.push();
+        self.bboard
     }
 
     /// Returns a bitboard of valid west attacks
