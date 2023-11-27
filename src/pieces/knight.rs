@@ -1,6 +1,7 @@
-use std::{fmt, ops};
 use super::board;
+use super::board::Side;
 use super::traits::Piece;
+use std::{fmt, ops};
 
 /// [short explanation of what the item does]
 ///
@@ -16,7 +17,7 @@ pub struct KnightSet {
 }
 
 impl Piece for KnightSet {
-
+    /// Returns a bitboard of all valid moves in a KnightSet
     fn moves(&self) -> Vec<board::Move> {
         let mut moves: Vec<board::Move> = Vec::new();
 
@@ -27,6 +28,7 @@ impl Piece for KnightSet {
         moves
     }
 
+    /// Returns a bitboard of all valid attacks in a KnightSet
     fn attacks(&self, blockers: u64) -> Vec<board::Move> {
         let mut moves: Vec<board::Move> = Vec::new();
 
@@ -41,6 +43,7 @@ impl Piece for KnightSet {
         unimplemented!()
     }
 
+    /// Returns the board
     fn board(&self) -> u64 {
         let mut board: u64 = 0;
         for knight in self.bboards {
@@ -51,6 +54,7 @@ impl Piece for KnightSet {
 }
 
 impl KnightSet {
+    /// Creates a new KnightSet of the given side
     pub fn new(side: board::Side) -> Self {
         let mut bboards: Vec<Knight> = Vec::new();
 
@@ -58,19 +62,17 @@ impl KnightSet {
             board::Side::White => {
                 bboards.push(Knight::new(board::POSITION_ARRAY[board::B1], side));
                 bboards.push(Knight::new(board::POSITION_ARRAY[board::G1], side));
-            },
+            }
             board::Side::Black => {
                 bboards.push(Knight::new(board::POSITION_ARRAY[board::B8], side));
                 bboards.push(Knight::new(board::POSITION_ARRAY[board::G8], side));
-            },
+            }
         }
 
-        KnightSet {
-            bboards,
-            side,
-        }
+        KnightSet { bboards, side }
     }
 
+    /// Evaluates the KnightSet
     pub fn evaluate(&self) -> i32 {
         let mut score = 0;
 
@@ -82,40 +84,37 @@ impl KnightSet {
     }
 }
 
-///Knight structure
-///
-/// Example
-/// ```
-/// ```
-///
+/// Knight structure
 pub struct Knight {
     bboard: u64,
     side: board::Side,
 }
 impl Knight {
+    /// Default white knight board
     pub const WHITE_DEFAULT: u64 = 0x42;
+    /// Default black knight board
     pub const BLACK_DEFAULT: u64 = 0x4200000000000000;
     pub const KNIGHT_TABLE: [i32; 64] = [
-        -50, -40, -30, -30, -30, -30, -40, -50,
-        -40, -20,   0,   5,   5,   0, -20, -40,
-        -30,   5,  10,  15,  15,  10,   5, -30,
-        -30,   0,  15,  20,  20,  15,   0, -30,
-        -30,   5,  15,  20,  20,  15,   5, -30,
-        -30,   0,  10,  15,  15,  10,   0, -30,
-        -40, -20,   0,   0,   0,   0, -20, -40,
-        -50, -40, -30, -30, -30, -30, -40, -50,
+        -50, -40, -30, -30, -30, -30, -40, -50, -40, -20, 0, 5, 5, 0, -20, -40, -30, 5, 10, 15, 15,
+        10, 5, -30, -30, 0, 15, 20, 20, 15, 0, -30, -30, 5, 15, 20, 20, 15, 5, -30, -30, 0, 10, 15,
+        15, 10, 0, -30, -40, -20, 0, 0, 0, 0, -20, -40, -50, -40, -30, -30, -30, -30, -40, -50,
     ];
 
+    /// Creates a new Knight of the given side
     pub fn new(pos: u64, side: board::Side) -> Self {
         match side {
             board::Side::White => {
                 return Knight {
+                    bboard: Knight::WHITE_DEFAULT,
+                    side: Side::White,
                 }
-            },
+            }
             board::Side::Black => {
                 return Knight {
+                    bboard: Knight::BLACK_DEFAULT,
+                    side: Side::Black,
                 }
-            },
+            }
         }
     }
 
@@ -149,7 +148,7 @@ impl Knight {
 }
 
 impl Piece for Knight {
-
+    /// Returns a bitboard of all valid moves in a Knight
     fn moves(&self) -> Vec<board::Move> {
         let mut moves: Vec<board::Move> = Vec::new();
 
@@ -192,6 +191,7 @@ impl Piece for Knight {
         moves
     }
 
+    /// Returns a bitboard of all valid attacks
     fn attacks(&self, blockers: u64) -> Vec<board::Move> {
         self.moves()
     }
@@ -200,13 +200,14 @@ impl Piece for Knight {
         match self.side {
             board::Side::White => {
                 return Knight::KNIGHT_TABLE[self.bboard.trailing_zeros() as usize]
-            },
+            }
             board::Side::Black => {
                 return Knight::KNIGHT_TABLE[63 - self.bboard.trailing_zeros() as usize]
             }
         }
     }
 
+    /// Returns the board
     fn board(&self) -> u64 {
         self.bboard
     }
@@ -217,6 +218,5 @@ mod test {
     use super::*;
 
     #[test]
-    fn test_knight() {
-    }
+    fn test_knight() {}
 }

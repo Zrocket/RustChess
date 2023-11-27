@@ -1,12 +1,12 @@
+use ai::*;
 use pieces::*;
 use std::fmt;
 use uci::*;
-use ai::*;
 use zobrist::*;
 
+pub mod ai;
 pub mod pieces;
 pub mod uci;
-pub mod ai;
 pub mod zobrist;
 
 pub struct Game {}

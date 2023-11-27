@@ -1,26 +1,17 @@
-use std::{fmt, ops};
+use super::board::{self, RAY_EAST, RAY_NORTH, RAY_SOUTH, RAY_WEST};
 use super::traits::Piece;
-use super::board::{self, RAY_NORTH, RAY_EAST, RAY_SOUTH, RAY_WEST};
+use std::{fmt, ops};
 
 /// A complete set of black and white Rooks
-///
-/// Example
-/// ```
-/// ```
-///
 pub struct RookSet {
+    /// Rook bitboards
     bboards: Vec<Rook>,
-    side: board::Side
+    /// The side of the board
+    side: board::Side,
 }
 
 impl Piece for RookSet {
-
     /// Returns a bitboard of all valid Rook Moves
-    ///
-    /// Example
-    /// ```
-    /// ```
-    ///
     fn moves(&self) -> Vec<board::Move> {
         let mut moves: Vec<board::Move> = Vec::new();
 
@@ -32,11 +23,6 @@ impl Piece for RookSet {
     }
 
     /// Returns a bitboard of all valid Rook attacks
-    ///
-    /// Example
-    /// ```
-    /// ```
-    ///
     fn attacks(&self, blockers: u64) -> Vec<board::Move> {
         let mut moves: Vec<board::Move> = Vec::new();
 
@@ -51,6 +37,7 @@ impl Piece for RookSet {
         unimplemented!()
     }
 
+    /// Returns the board
     fn board(&self) -> u64 {
         let mut board: u64 = 0;
         for rook in self.bboards {
@@ -61,6 +48,7 @@ impl Piece for RookSet {
 }
 
 impl RookSet {
+    /// Creates a new RookSet of the given side
     pub fn new(side: board::Side) -> Self {
         let mut bboards: Vec<Rook> = Vec::new();
 
@@ -68,19 +56,17 @@ impl RookSet {
             board::Side::White => {
                 bboards.push(Rook::new(board::POSITION_ARRAY[board::A1], side));
                 bboards.push(Rook::new(board::POSITION_ARRAY[board::H1], side));
-            },
+            }
             board::Side::Black => {
                 bboards.push(Rook::new(board::POSITION_ARRAY[board::A8], side));
                 bboards.push(Rook::new(board::POSITION_ARRAY[board::H8], side));
-            },
+            }
         }
 
-        RookSet {
-            bboards,
-            side,
-        }
+        RookSet { bboards, side }
     }
 
+    /// Returns the evaluation of the RookSet
     pub fn evaluate(&self) -> i32 {
         let mut score = 0;
 
@@ -93,51 +79,32 @@ impl RookSet {
 }
 
 /// Rook structure
-///
-/// Example
-/// ```
-/// ```
-///
 pub struct Rook {
     bboard: u64,
-    side: board::Side
+    side: board::Side,
 }
 
 impl Rook {
-    pub const WHITE_DEFAULT: u64 = (board::RANK_1 & board::A_FILE) | (board::RANK_1 & board::H_FILE);
-    pub const BLACK_DEFAULT: u64 = (board::RANK_8 & board::A_FILE) | (board::RANK_8 & board::H_FILE);
+    /// Default white rook board
+    pub const WHITE_DEFAULT: u64 =
+        (board::RANK_1 & board::A_FILE) | (board::RANK_1 & board::H_FILE);
+    /// Default black rook board
+    pub const BLACK_DEFAULT: u64 =
+        (board::RANK_8 & board::A_FILE) | (board::RANK_8 & board::H_FILE);
     pub const ROOK_TABLE: [i32; 64] = [
-        0,  0,  0,  5,  5,  0,  0,  0,
-        -5,  0,  0,  0,  0,  0,  0, -5,
-        -5,  0,  0,  0,  0,  0,  0, -5,
-        -5,  0,  0,  0,  0,  0,  0, -5,
-        -5,  0,  0,  0,  0,  0,  0, -5,
-        -5,  0,  0,  0,  0,  0,  0, -5,
-        5, 10, 10, 10, 10, 10, 10,  5,
-        0,  0,  0,  0,  0,  0,  0,  0
+        0, 0, 0, 5, 5, 0, 0, 0, -5, 0, 0, 0, 0, 0, 0, -5, -5, 0, 0, 0, 0, 0, 0, -5, -5, 0, 0, 0, 0,
+        0, 0, -5, -5, 0, 0, 0, 0, 0, 0, -5, -5, 0, 0, 0, 0, 0, 0, -5, 5, 10, 10, 10, 10, 10, 10, 5,
+        0, 0, 0, 0, 0, 0, 0, 0,
     ];
 
-    /// Returns a new Rook bboard of the desiganted side
-    ///
-    /// Example
-    /// ```
-    /// ```
-    ///
+    /// Creates a new Rook of the given side
     pub fn new(pos: u64, side: board::Side) -> Self {
         todo!()
     }
 }
 
 impl Piece for Rook {
-
     /// Return a bitboard of all valid moves
-    ///
-    /// Example
-    /// ```
-    /// ```
-    ///
-    /// # [OPTIONAL: more explanations and code examples in case some specific
-    /// # cases have to be explained in details]
     fn moves(&self) -> Vec<board::Move> {
         let mut moves: Vec<board::Move> = Vec::new();
 
@@ -151,35 +118,27 @@ impl Piece for Rook {
                 to: to as usize,
                 flags: board::BoardFlags::empty(),
             });
-            set &= set -1;
+            set &= set - 1;
         }
 
         moves
     }
 
     /// Return a bitboard of all vlalid attacks
-    ///
-    /// Example
-    /// ```
-    /// ```
-    ///
-    /// # [OPTIONAL: more explanations and code examples in case some specific
-    /// # cases have to be explained in details]
     fn attacks(&self, blockers: u64) -> Vec<board::Move> {
         todo!()
     }
 
     fn piece_square_value(&self) -> i32 {
         match self.side {
-            board::Side::White => {
-                return Rook::ROOK_TABLE[self.bboard.trailing_zeros() as usize]
-            },
+            board::Side::White => return Rook::ROOK_TABLE[self.bboard.trailing_zeros() as usize],
             board::Side::Black => {
                 return Rook::ROOK_TABLE[63 - self.bboard.trailing_zeros() as usize]
             }
         }
     }
 
+    /// Returns the board
     fn board(&self) -> u64 {
         self.bboard
     }
@@ -190,6 +149,5 @@ mod test {
     use super::*;
 
     #[test]
-    fn test_rook() {
-    }
+    fn test_rook() {}
 }

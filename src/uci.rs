@@ -4,6 +4,7 @@ use std::str::SplitWhitespace;
 const ENGINE_NAME: &'static str = "RustChess";
 const AUTHOR_NAME: &'static str = "Drake Murphy";
 
+/// UCI engine
 pub struct Uci {
     name: String,
     author: String,
@@ -20,6 +21,7 @@ impl Default for Uci {
     }
 }
 
+/// Xboard engine
 pub struct Xboard;
 
 impl Uci {
@@ -28,7 +30,7 @@ impl Uci {
             match command {
                 "on" => self.debug = true,
                 "off" => self.debug = false,
-                _ => todo!()
+                _ => todo!(),
             }
         }
     }
@@ -36,7 +38,7 @@ impl Uci {
     fn is_ready(&self, params: &mut SplitWhitespace) {
         if let Some(command) = params.next() {
             match command {
-                _ => todo!()
+                _ => todo!(),
             }
         }
     }
@@ -45,8 +47,7 @@ impl Uci {
         if let Some(command) = params.next() {
             if command == "name" {
                 if let Some(command) = params.next() {
-                    if command == "value" {
-                    }
+                    if command == "value" {}
                 }
             }
         }
@@ -58,7 +59,7 @@ impl Uci {
             match command {
                 "later" => todo!(),
                 "name" => todo!(),
-                _ => todo!()
+                _ => todo!(),
             }
         }
     }
@@ -76,7 +77,7 @@ impl Uci {
     fn go(&self, params: &mut SplitWhitespace) {
         if let Some(command) = params.next() {
             match command {
-                _ => todo!()
+                _ => todo!(),
             }
         }
     }
@@ -84,7 +85,7 @@ impl Uci {
     fn stop(&self, params: &mut SplitWhitespace) {
         if let Some(command) = params.next() {
             match command {
-                _ => todo!()
+                _ => todo!(),
             }
         }
     }
@@ -92,7 +93,7 @@ impl Uci {
     fn ponder_hit(&self, params: &mut SplitWhitespace) {
         if let Some(command) = params.next() {
             match command {
-                _ => todo!()
+                _ => todo!(),
             }
         }
     }
@@ -100,7 +101,7 @@ impl Uci {
     fn quit(&self, params: &mut SplitWhitespace) {
         if let Some(command) = params.next() {
             match command {
-                _ => todo!()
+                _ => todo!(),
             }
         }
     }
@@ -108,7 +109,7 @@ impl Uci {
     fn uci_new_game(&self, params: &mut SplitWhitespace) {
         if let Some(command) = params.next() {
             match command {
-                _ => todo!()
+                _ => todo!(),
             }
         }
     }
@@ -116,7 +117,7 @@ impl Uci {
     fn perft(&self, params: &mut SplitWhitespace) {
         if let Some(command) = params.next() {
             match command {
-                _ => todo!()
+                _ => todo!(),
             }
         }
     }
@@ -124,7 +125,7 @@ impl Uci {
     fn test(&self, params: &mut SplitWhitespace) {
         if let Some(command) = params.next() {
             match command {
-                _ => todo!()
+                _ => todo!(),
             }
         }
     }
@@ -184,12 +185,13 @@ fn decode_fen(fen: &str) {
                 'r' => todo!(),
                 'q' => todo!(),
                 'k' => todo!(),
-                _ => todo!()
+                _ => todo!(),
             }
         }
     }
 }
 
+/// Main entry point
 pub fn entry() {
     for line in io::stdin().lines() {
         let mut params = line.unwrap().split_whitespace();

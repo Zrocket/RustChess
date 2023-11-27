@@ -1,26 +1,15 @@
-use std::{fmt, ops::*};
-use super::traits::Piece;
 use super::board::{self, BoardFlags};
+use super::traits::Piece;
+use std::{fmt, ops::*};
 
 /// A complete set of black and white pawns
-///
-/// Example
-/// ```
-/// ```
-///
 pub struct PawnSet {
     bboards: Vec<Pawn>,
     side: board::Side,
 }
 
 impl Piece for PawnSet {
-
     /// Returns a bitboard of all valid moves in a PawnSet
-    ///
-    /// Example
-    /// ```
-    /// ```
-    ///
     fn moves(&self) -> Vec<board::Move> {
         let mut moves: Vec<board::Move> = Vec::new();
         let mut set: u64 = 0x00;
@@ -32,11 +21,6 @@ impl Piece for PawnSet {
     }
 
     /// Returns a bitboard of all valid attacks in a PawnSet
-    ///
-    /// Example
-    /// ```
-    /// ```
-    ///
     fn attacks(&self, blockers: u64) -> Vec<board::Move> {
         let mut moves: Vec<board::Move> = Vec::new();
         let mut set: u64 = 0x00;
@@ -51,6 +35,7 @@ impl Piece for PawnSet {
         unimplemented!()
     }
 
+    /// Returns the board
     fn board(&self) -> u64 {
         let mut board: u64 = 0;
         for pawn in self.bboards {
@@ -61,6 +46,7 @@ impl Piece for PawnSet {
 }
 
 impl PawnSet {
+    /// Creates a new PawnSet of the given side
     pub fn new(side: board::Side) -> Self {
         let mut bboards: Vec<Pawn> = Vec::new();
 
@@ -69,20 +55,18 @@ impl PawnSet {
                 for i in board::A2..board::A3 {
                     bboards.push(Pawn::new(board::POSITION_ARRAY[i], side));
                 }
-            },
+            }
             board::Side::Black => {
                 for i in board::A7..board::A8 {
                     bboards.push(Pawn::new(board::POSITION_ARRAY[i], side));
                 }
-            },
+            }
         }
 
-        PawnSet {
-            bboards,
-            side,
-        }
+        PawnSet { bboards, side }
     }
 
+    /// Evaluates the PawnSet
     pub fn evaluate(&self) -> i32 {
         let mut score = 0;
         for pawn in self.bboards {
@@ -94,23 +78,13 @@ impl PawnSet {
 }
 
 /// Pawn structure
-///
-/// Example
-/// ``` ```
-///
 pub struct Pawn {
     pub bboard: u64,
     pub side: board::Side,
 }
 
 impl Piece for Pawn {
-
     /// Returns a bitboard of all valid moves
-    ///
-    /// Example
-    /// ```
-    /// ```
-    ///
     fn moves(&self) -> Vec<board::Move> {
         let mut moves: Vec<board::Move> = Vec::new();
         moves.push(board::Move {
@@ -128,11 +102,6 @@ impl Piece for Pawn {
     }
 
     /// Returns a bitboard of all valid attacks
-    ///
-    /// Example
-    /// ```
-    /// ```
-    ///
     fn attacks(&self, blockers: u64) -> Vec<board::Move> {
         let mut moves: Vec<board::Move> = Vec::new();
 
@@ -152,69 +121,45 @@ impl Piece for Pawn {
 
     fn piece_square_value(&self) -> i32 {
         match self.side {
-            board::Side::White => {
-                return Pawn::PAWN_TABLE[self.bboard.trailing_zeros() as usize]
-            },
+            board::Side::White => return Pawn::PAWN_TABLE[self.bboard.trailing_zeros() as usize],
             board::Side::Black => {
                 return Pawn::PAWN_TABLE[63 - self.bboard.trailing_zeros() as usize]
             }
         }
     }
 
+    /// Returns the board
     fn board(&self) -> u64 {
         self.bboard
     }
-
 }
 
 impl Pawn {
     pub const PAWN_TABLE: [i32; 64] = [
-    0,   0,   0,   0,   0,   0,   0,   0,
-    50, 50, 50, 50, 50, 50, 50, 50,
-    10, 10, 20, 30, 30, 20, 10, 10,
-    5,   5, 10, 25, 25, 10,  5,  5,
-    0,   0,   0, 20, 20,  0,  0,  0,
-    5,  -5,-10,  0,  0,-10, -5,  5,
-    5,  10, 10,-20,-20, 10, 10,  5,
-    0,   0,   0,   0,   0,   0,   0,   0
+        0, 0, 0, 0, 0, 0, 0, 0, 50, 50, 50, 50, 50, 50, 50, 50, 10, 10, 20, 30, 30, 20, 10, 10, 5,
+        5, 10, 25, 25, 10, 5, 5, 0, 0, 0, 20, 20, 0, 0, 0, 5, -5, -10, 0, 0, -10, -5, 5, 5, 10, 10,
+        -20, -20, 10, 10, 5, 0, 0, 0, 0, 0, 0, 0, 0,
     ];
 
-    /// Create a new Pawn
-    ///
-    /// Example
-    /// ```
-    /// ```
-    ///
+    /// Create a new Pawn of the given side
     pub fn new(pos: u64, side: board::Side) -> Self {
-        Pawn {
-            bboard: pos,
-            side,
-        }
+        Pawn { bboard: pos, side }
     }
 
-    //Bit masks
+    /// Default board for white pawns
     pub const WHITE_DEFAULT: u64 = board::RANK_2;
+    /// Default board for black pawns
     pub const BLACK_DEFAULT: u64 = board::RANK_7;
 
     /// Return a bitboard of a side relevant pawn push
-    ///
-    /// Example
-    /// ```
-    /// ```
-    ///
     pub fn push(&self) -> u64 {
         match self.side {
-            board::Side::White => { board::north_one(self.bboard) }
-            board::Side::Black => { board::south_one(self.bboard) }
+            board::Side::White => board::north_one(self.bboard),
+            board::Side::Black => board::south_one(self.bboard),
         }
     }
 
     /// Returns a bitboard of a side relevant pawn double push
-    ///
-    /// Example
-    /// ```
-    /// ```
-    ///
     pub fn double_push(&self) -> u64 {
         self.push();
         self.push();
@@ -222,28 +167,18 @@ impl Pawn {
     }
 
     /// Returns a bitboard of valid west attacks
-    ///
-    /// Example
-    /// ```
-    /// ```
-    ///
     pub fn west_attacks(&self) -> u64 {
         match self.side {
-            board::Side::White => { board::northeast_one(self.bboard) }
-            board::Side::Black => { board::southwest_one(self.bboard) }
+            board::Side::White => board::northeast_one(self.bboard),
+            board::Side::Black => board::southwest_one(self.bboard),
         }
     }
 
     /// Returns a bitboard of valid east attacks
-    ///
-    /// Example
-    /// ```
-    /// ```
-    ///
     pub fn east_attacks(&self) -> u64 {
         match self.side {
-            board::Side::White => { board::northeast_one(self.bboard) }
-            board::Side::Black => { board::southeast_one(self.bboard) }
+            board::Side::White => board::northeast_one(self.bboard),
+            board::Side::Black => board::southeast_one(self.bboard),
         }
     }
 }

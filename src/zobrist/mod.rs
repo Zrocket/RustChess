@@ -32,19 +32,19 @@ impl Default for Zobrist {
     fn default() -> Self {
         let mut rng = rand::thread_rng();
 
-        Zobrist { 
+        Zobrist {
             pawn_white: (0..63).map(|_| rng.gen()).collect(),
             knight_white: (0..63).map(|_| rng.gen()).collect(),
-            bishop_white:(0..63).map(|_| rng.gen()).collect(),
+            bishop_white: (0..63).map(|_| rng.gen()).collect(),
             rook_white: (0..63).map(|_| rng.gen()).collect(),
-            queen_white:(0..63).map(|_| rng.gen()).collect(),
+            queen_white: (0..63).map(|_| rng.gen()).collect(),
             king_white: (0..63).map(|_| rng.gen()).collect(),
             pawn_black: (0..63).map(|_| rng.gen()).collect(),
-            knight_black:(0..63).map(|_| rng.gen()).collect(),
-            bishop_black:(0..63).map(|_| rng.gen()).collect(),
+            knight_black: (0..63).map(|_| rng.gen()).collect(),
+            bishop_black: (0..63).map(|_| rng.gen()).collect(),
             rook_black: (0..63).map(|_| rng.gen()).collect(),
-            queen_black:(0..63).map(|_| rng.gen()).collect(),
-            king_black:(0..63).map(|_| rng.gen()).collect(),
+            queen_black: (0..63).map(|_| rng.gen()).collect(),
+            king_black: (0..63).map(|_| rng.gen()).collect(),
             move_black: rng.gen(),
             castling_king_black: rng.gen(),
             castling_queen_black: rng.gen(),
