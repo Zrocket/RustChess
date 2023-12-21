@@ -2,6 +2,7 @@ use crate::pieces::{board::Board, traits::Piece};
 use std::cmp::{max, min};
 
 /// AI engine
+/// board_stack: Vec of boards
 pub struct Ai {
     pub board_stack: Vec<Board>,
 }
@@ -17,7 +18,12 @@ impl Default for Ai {
 
 impl Ai {
     /// Alpha beta search
+    /// board: current board
+    /// depth: current depth
+    /// alpha: lower bound
+    /// beta: upper bound
     pub fn alpha_beta(&self, board: Board, depth: usize, alpha: i32, beta: i32) -> i32 {
+        // If the depth is 0 or the game is over, return the evaluation
         if depth == 0 || board.is_game_over() {
             return board.evaluate();
         }
@@ -27,6 +33,7 @@ impl Ai {
         let mut beta = beta;
         let moves = board.moves();
 
+        // Iterate over all the moves and evaluate them
         for mv in moves {
             value = -self.alpha_beta(board, depth - 1, -beta, -alpha);
 
@@ -40,6 +47,7 @@ impl Ai {
             }
         }
 
+        // Return the best move
         alpha
     }
 }

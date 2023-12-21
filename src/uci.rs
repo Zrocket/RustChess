@@ -5,6 +5,8 @@ const ENGINE_NAME: &'static str = "RustChess";
 const AUTHOR_NAME: &'static str = "Drake Murphy";
 
 /// UCI engine
+/// name: engine name
+/// author: engine author
 pub struct Uci {
     name: String,
     author: String,

@@ -30,8 +30,10 @@ pub struct Zobrist {
 
 impl Default for Zobrist {
     fn default() -> Self {
+        // Get a random number generator
         let mut rng = rand::thread_rng();
 
+        // Generate the zobrist
         Zobrist {
             pawn_white: (0..63).map(|_| rng.gen()).collect(),
             knight_white: (0..63).map(|_| rng.gen()).collect(),
