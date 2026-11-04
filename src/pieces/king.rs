@@ -1,6 +1,5 @@
 use super::board;
 use super::traits::Piece;
-use std::{fmt, ops::*};
 
 ///King structure
 pub struct King {
@@ -37,56 +36,21 @@ impl King {
 
 impl Piece for King {
     /// Returns all moves
-    fn moves(&self) -> Vec<board::Move> {
-        let mut moves: Vec<board::Move> = Vec::new();
+    fn moves(&self) -> u64 {
 
-        moves.push(board::Move {
-            from: self.bboard.trailing_zeros() as usize,
-            to: board::north_one(self.bboard).trailing_zeros() as usize,
-            flags: board::BoardFlags::empty(),
-        });
-        moves.push(board::Move {
-            from: self.bboard.trailing_zeros() as usize,
-            to: board::west_one(self.bboard).trailing_zeros() as usize,
-            flags: board::BoardFlags::empty(),
-        });
-        moves.push(board::Move {
-            from: self.bboard.trailing_zeros() as usize,
-            to: board::east_one(self.bboard).trailing_zeros() as usize,
-            flags: board::BoardFlags::empty(),
-        });
-        moves.push(board::Move {
-            from: self.bboard.trailing_zeros() as usize,
-            to: board::south_one(self.bboard).trailing_zeros() as usize,
-            flags: board::BoardFlags::empty(),
-        });
-        moves.push(board::Move {
-            from: self.bboard.trailing_zeros() as usize,
-            to: board::northeast_one(self.bboard).trailing_zeros() as usize,
-            flags: board::BoardFlags::empty(),
-        });
-        moves.push(board::Move {
-            from: self.bboard.trailing_zeros() as usize,
-            to: board::northeast_one(self.bboard).trailing_zeros() as usize,
-            flags: board::BoardFlags::empty(),
-        });
-        moves.push(board::Move {
-            from: self.bboard.trailing_zeros() as usize,
-            to: board::southwest_one(self.bboard).trailing_zeros() as usize,
-            flags: board::BoardFlags::empty(),
-        });
-        moves.push(board::Move {
-            from: self.bboard.trailing_zeros() as usize,
-            to: board::southeast_one(self.bboard).trailing_zeros() as usize,
-            flags: board::BoardFlags::empty(),
-        });
-
-        moves
+        board::north_one(self.bboard).trailing_zeros() as u64
+            | board::west_one(self.bboard).trailing_zeros() as u64
+            | board::east_one(self.bboard).trailing_zeros() as u64
+            | board::south_one(self.bboard).trailing_zeros() as u64
+            | board::northeast_one(self.bboard).trailing_zeros() as u64
+            | board::northwest_one(self.bboard).trailing_zeros() as u64
+            | board::southwest_one(self.bboard).trailing_zeros() as u64
+            | board::southeast_one(self.bboard).trailing_zeros() as u64
     }
 
     /// Returns all attacks
-    fn attacks(&self, blockers: u64) -> Vec<board::Move> {
-        self.moves()
+    fn attacks(&self, blockers: u64) -> u64 {
+        todo!()
     }
 
     /// Returns the piece square value
@@ -107,7 +71,6 @@ impl Piece for King {
 
 #[cfg(test)]
 mod test {
-    use super::*;
 
     #[test]
     fn test_king() {}

@@ -3,7 +3,6 @@ use super::{
     traits::Piece,
 };
 use bitflags::bitflags;
-use std::collections::HashMap;
 
 bitflags! {
     #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
@@ -49,7 +48,7 @@ impl Default for Board {
 impl Board {
     /// Check if the game is over
     pub fn is_game_over(&self) -> bool {
-        if self.white.moves().len() == 0 || self.black.moves().len() == 0 {
+        if self.white.moves() == 0 || self.black.moves() == 0 {
             return true;
         }
 
@@ -88,37 +87,27 @@ pub struct Player {
 
 impl Piece for Player {
     /// Returns all moves
-    fn moves(&self) -> Vec<Move> {
-        // moves are stored in a vector of type Move
-        let mut moves: Vec<Move> = Vec::new();
+    fn moves(&self) -> u64 {
 
         // add moves for each piece
-        moves.extend(self.pawns.moves());
-        moves.extend(self.knights.moves());
-        moves.extend(self.bishops.moves());
-        moves.extend(self.rooks.moves());
-        moves.extend(self.queen.moves());
-        moves.extend(self.king.moves());
-
-        // return moves vector
-        moves
+        self.pawns.moves()
+            | self.knights.moves()
+            | self.bishops.moves()
+            | self.rooks.moves()
+            | self.queen.moves()
+            | self.king.moves()
     }
 
     /// Returns all attacks
-    fn attacks(&self, blockers: u64) -> Vec<Move> {
-        // moves are stored in a vector of type Move
-        let mut moves: Vec<Move> = Vec::new();
+    fn attacks(&self, blockers: u64) -> u64 {
 
         // add moves for each piece
-        moves.extend(self.pawns.attacks(blockers));
-        moves.extend(self.knights.attacks(blockers));
-        moves.extend(self.bishops.attacks(blockers));
-        moves.extend(self.rooks.attacks(blockers));
-        moves.extend(self.queen.attacks(blockers));
-        moves.extend(self.king.attacks(blockers));
-
-        // return moves vector
-        moves
+        self.pawns.attacks(blockers)
+            | self.knights.attacks(blockers)
+            | self.bishops.attacks(blockers)
+            | self.rooks.attacks(blockers)
+            | self.queen.attacks(blockers)
+            | self.king.attacks(blockers)
     }
 
     /// Returns the piece square value
@@ -857,7 +846,7 @@ pub const RAY_SOUTH_EAST: [u64; 64] = [
     0x8000000000000000,
 ];
 
-#[derive(Debug, Clone, Hash, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, Hash, PartialEq, Eq)]
 pub enum Side {
     White,
     Black,
@@ -1059,5 +1048,4 @@ pub fn get_ray(mut board: u64, direction: Ray) -> u64 {
 
 #[cfg(test)]
 mod test {
-    use super::*;
 }

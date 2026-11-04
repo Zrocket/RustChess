@@ -1,7 +1,6 @@
 use super::board;
 use super::board::Side;
 use super::traits::Piece;
-use std::{fmt, ops};
 
 /// [short explanation of what the item does]
 ///
@@ -18,22 +17,22 @@ pub struct KnightSet {
 
 impl Piece for KnightSet {
     /// Returns a bitboard of all valid moves in a KnightSet
-    fn moves(&self) -> Vec<board::Move> {
-        let mut moves: Vec<board::Move> = Vec::new();
+    fn moves(&self) -> u64 {
+        let mut moves: u64 = 0;
 
         for knight in self.bboards.iter() {
-            moves.extend(knight.moves());
+            moves |= knight.moves();
         }
 
         moves
     }
 
     /// Returns a bitboard of all valid attacks in a KnightSet
-    fn attacks(&self, blockers: u64) -> Vec<board::Move> {
-        let mut moves: Vec<board::Move> = Vec::new();
+    fn attacks(&self, blockers: u64) -> u64 {
+        let mut moves: u64 = 0;
 
         for knight in self.bboards.iter() {
-            moves.extend(knight.attacks(blockers));
+            moves |= knight.attacks(blockers);
         }
 
         moves
@@ -46,8 +45,8 @@ impl Piece for KnightSet {
     /// Returns the board
     fn board(&self) -> u64 {
         let mut board: u64 = 0;
-        for knight in self.bboards {
-            board &= knight.board();
+        for knight in self.bboards.iter() {
+            board |= knight.board();
         }
         board
     }
@@ -76,7 +75,7 @@ impl KnightSet {
     pub fn evaluate(&self) -> i32 {
         let mut score = 0;
 
-        for knight in self.bboards {
+        for knight in self.bboards.iter() {
             score += 3 * knight.piece_square_value();
         }
 
@@ -85,6 +84,7 @@ impl KnightSet {
 }
 
 /// Knight structure
+#[derive(Debug, Clone, Copy)]
 pub struct Knight {
     bboard: u64,
     side: board::Side,
@@ -149,51 +149,19 @@ impl Knight {
 
 impl Piece for Knight {
     /// Returns a bitboard of all valid moves in a Knight
-    fn moves(&self) -> Vec<board::Move> {
-        let mut moves: Vec<board::Move> = Vec::new();
-
-        moves.push(board::Move {
-            from: self.bboard.trailing_zeros() as usize,
-            to: self.north_north_east().trailing_zeros() as usize,
-            flags: board::BoardFlags::empty(),
-        });
-        moves.push(board::Move {
-            from: self.bboard.trailing_zeros() as usize,
-            to: self.north_east_east().trailing_zeros() as usize,
-            flags: board::BoardFlags::empty(),
-        });
-        moves.push(board::Move {
-            from: self.bboard.trailing_zeros() as usize,
-            to: self.south_east_east().trailing_zeros() as usize,
-            flags: board::BoardFlags::empty(),
-        });
-        moves.push(board::Move {
-            from: self.bboard.trailing_zeros() as usize,
-            to: self.south_south_east().trailing_zeros() as usize,
-            flags: board::BoardFlags::empty(),
-        });
-        moves.push(board::Move {
-            from: self.bboard.trailing_zeros() as usize,
-            to: self.north_north_west().trailing_zeros() as usize,
-            flags: board::BoardFlags::empty(),
-        });
-        moves.push(board::Move {
-            from: self.bboard.trailing_zeros() as usize,
-            to: self.north_west_west().trailing_zeros() as usize,
-            flags: board::BoardFlags::empty(),
-        });
-        moves.push(board::Move {
-            from: self.bboard.trailing_zeros() as usize,
-            to: self.south_south_west().trailing_zeros() as usize,
-            flags: board::BoardFlags::empty(),
-        });
-
-        moves
+    fn moves(&self) -> u64 {
+              self.north_north_east()
+            | self.north_east_east()
+            | self.south_east_east()
+            | self.south_south_east()
+            | self.north_north_west()
+            | self.north_west_west()
+            | self.south_south_west()
     }
 
     /// Returns a bitboard of all valid attacks
-    fn attacks(&self, blockers: u64) -> Vec<board::Move> {
-        self.moves()
+    fn attacks(&self, blockers: u64) -> u64 {
+        todo!()
     }
 
     fn piece_square_value(&self) -> i32 {
@@ -215,7 +183,6 @@ impl Piece for Knight {
 
 #[cfg(test)]
 mod test {
-    use super::*;
 
     #[test]
     fn test_knight() {}

@@ -1,9 +1,7 @@
-use super::board;
-
 pub trait Piece {
-    fn moves(&self) -> Vec<board::Move>;
+    fn moves(&self) -> u64; 
 
-    fn attacks(&self, blockers: u64) -> Vec<board::Move>;
+    fn attacks(&self, blockers: u64) -> u64;
 
     fn piece_square_value(&self) -> i32;
 

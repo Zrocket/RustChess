@@ -1,6 +1,5 @@
-use super::board::{self, BoardFlags};
+use super::board::self;
 use super::traits::Piece;
-use std::{fmt, ops::*};
 
 /// A complete set of black and white pawns
 pub struct PawnSet {
@@ -10,22 +9,22 @@ pub struct PawnSet {
 
 impl Piece for PawnSet {
     /// Returns a bitboard of all valid moves in a PawnSet
-    fn moves(&self) -> Vec<board::Move> {
-        let mut moves: Vec<board::Move> = Vec::new();
-        let mut set: u64 = 0x00;
+    fn moves(&self) -> u64 {
+        let mut moves: u64 = 0;
+
         for pawn in self.bboards.iter() {
-            moves.extend(pawn.moves());
+            moves |= pawn.moves();
         }
 
         moves
     }
 
     /// Returns a bitboard of all valid attacks in a PawnSet
-    fn attacks(&self, blockers: u64) -> Vec<board::Move> {
-        let mut moves: Vec<board::Move> = Vec::new();
-        let mut set: u64 = 0x00;
+    fn attacks(&self, blockers: u64) -> u64 {
+        let mut moves: u64 = 0;
+
         for pawn in self.bboards.iter() {
-            moves.extend(pawn.attacks(blockers));
+            moves |= pawn.attacks(blockers);
         }
 
         moves
@@ -38,8 +37,8 @@ impl Piece for PawnSet {
     /// Returns the board
     fn board(&self) -> u64 {
         let mut board: u64 = 0;
-        for pawn in self.bboards {
-            board &= pawn.board();
+        for pawn in self.bboards.iter() {
+            board |= pawn.board();
         }
         board
     }
@@ -69,7 +68,7 @@ impl PawnSet {
     /// Evaluates the PawnSet
     pub fn evaluate(&self) -> i32 {
         let mut score = 0;
-        for pawn in self.bboards {
+        for pawn in self.bboards.iter() {
             score += 1 * pawn.piece_square_value();
         }
 
@@ -85,38 +84,15 @@ pub struct Pawn {
 
 impl Piece for Pawn {
     /// Returns a bitboard of all valid moves
-    fn moves(&self) -> Vec<board::Move> {
-        let mut moves: Vec<board::Move> = Vec::new();
-        moves.push(board::Move {
-            from: self.bboard.trailing_zeros() as usize,
-            to: self.push().trailing_zeros() as usize,
-            flags: board::BoardFlags::empty(),
-        });
-        moves.push(board::Move {
-            from: self.bboard.trailing_zeros() as usize,
-            to: self.double_push().trailing_zeros() as usize,
-            flags: board::BoardFlags::empty(),
-        });
-
-        moves
+    fn moves(&self) -> u64 {
+        self.push().trailing_zeros() as u64
+            | self.double_push().trailing_zeros() as u64
     }
 
     /// Returns a bitboard of all valid attacks
-    fn attacks(&self, blockers: u64) -> Vec<board::Move> {
-        let mut moves: Vec<board::Move> = Vec::new();
-
-        moves.push(board::Move {
-            from: self.bboard.trailing_zeros() as usize,
-            to: self.west_attacks().trailing_zeros() as usize,
-            flags: board::BoardFlags::empty(),
-        });
-        moves.push(board::Move {
-            from: self.bboard.trailing_zeros() as usize,
-            to: self.east_attacks().trailing_zeros() as usize,
-            flags: board::BoardFlags::empty(),
-        });
-
-        moves
+    fn attacks(&self, blockers: u64) -> u64 {
+        self.west_attacks().trailing_zeros() as u64
+            | self.east_attacks().trailing_zeros() as u64
     }
 
     fn piece_square_value(&self) -> i32 {

@@ -1,6 +1,5 @@
 use super::board::{self, RAY_EAST, RAY_NORTH, RAY_SOUTH, RAY_WEST};
 use super::traits::Piece;
-use std::{fmt, ops};
 
 /// A complete set of black and white Rooks
 pub struct RookSet {
@@ -12,22 +11,22 @@ pub struct RookSet {
 
 impl Piece for RookSet {
     /// Returns a bitboard of all valid Rook Moves
-    fn moves(&self) -> Vec<board::Move> {
-        let mut moves: Vec<board::Move> = Vec::new();
+    fn moves(&self) -> u64 {
+        let mut moves: u64 = 0;
 
         for rook in self.bboards.iter() {
-            moves.extend(rook.moves());
+            moves |= rook.moves();
         }
 
         moves
     }
 
     /// Returns a bitboard of all valid Rook attacks
-    fn attacks(&self, blockers: u64) -> Vec<board::Move> {
-        let mut moves: Vec<board::Move> = Vec::new();
+    fn attacks(&self, blockers: u64) -> u64 {
+        let mut moves: u64 = 0;
 
         for rook in self.bboards.iter() {
-            moves.extend(rook.attacks(blockers));
+            moves |= rook.attacks(blockers);
         }
 
         moves
@@ -40,7 +39,7 @@ impl Piece for RookSet {
     /// Returns the board
     fn board(&self) -> u64 {
         let mut board: u64 = 0;
-        for rook in self.bboards {
+        for rook in self.bboards.iter() {
             board &= rook.board();
         }
         board
@@ -70,7 +69,7 @@ impl RookSet {
     pub fn evaluate(&self) -> i32 {
         let mut score = 0;
 
-        for rook in self.bboards {
+        for rook in self.bboards.iter() {
             score += 5 * rook.piece_square_value();
         }
 
@@ -105,19 +104,14 @@ impl Rook {
 
 impl Piece for Rook {
     /// Return a bitboard of all valid moves
-    fn moves(&self) -> Vec<board::Move> {
-        let mut moves: Vec<board::Move> = Vec::new();
+    fn moves(&self) -> u64 {
+        let mut moves: u64 = 0;
 
         let index = board::bitscan(self.bboard).unwrap() as usize;
         let mut set = RAY_NORTH[index] | RAY_EAST[index] | RAY_SOUTH[index] | RAY_WEST[index];
 
         while set != 0 {
-            let to = set.trailing_zeros();
-            moves.push(board::Move {
-                from: self.bboard.trailing_zeros() as usize,
-                to: to as usize,
-                flags: board::BoardFlags::empty(),
-            });
+            moves |= set.trailing_zeros() as u64;
             set &= set - 1;
         }
 
@@ -125,7 +119,7 @@ impl Piece for Rook {
     }
 
     /// Return a bitboard of all vlalid attacks
-    fn attacks(&self, blockers: u64) -> Vec<board::Move> {
+    fn attacks(&self, blockers: u64) -> u64 {
         todo!()
     }
 
@@ -146,7 +140,6 @@ impl Piece for Rook {
 
 #[cfg(test)]
 mod test {
-    use super::*;
 
     #[test]
     fn test_rook() {}

@@ -1,6 +1,5 @@
-use super::board::{self, bitscan, RAY_NORTH_EAST, RAY_NORTH_WEST, RAY_SOUTH_EAST, RAY_SOUTH_WEST};
+use super::board::{self, RAY_NORTH_EAST, RAY_NORTH_WEST, RAY_SOUTH_EAST, RAY_SOUTH_WEST};
 use super::traits::Piece;
-use std::{fmt, ops};
 
 /// Bishopset structure
 pub struct BishopSet {
@@ -10,22 +9,22 @@ pub struct BishopSet {
 
 impl Piece for BishopSet {
     /// Returns all moves
-    fn moves(&self) -> Vec<board::Move> {
-        let mut moves: Vec<board::Move> = Vec::new();
+    fn moves(&self) -> u64 {
+        let mut moves: u64 = 0;
 
         for bishop in self.bboards.iter() {
-            moves.extend(bishop.moves());
+            moves |= bishop.moves();
         }
 
         moves
     }
 
     /// Returns all attacks
-    fn attacks(&self, blockers: u64) -> Vec<board::Move> {
-        let mut moves: Vec<board::Move> = Vec::new();
+    fn attacks(&self, blockers: u64) -> u64 {
+        let mut moves: u64 = 0;
 
-        for bishop in self.bboards {
-            moves.extend(bishop.attacks(blockers));
+        for bishop in self.bboards.iter() {
+            moves |= bishop.attacks(blockers);
         }
 
         moves
@@ -38,8 +37,8 @@ impl Piece for BishopSet {
     /// Returns the board
     fn board(&self) -> u64 {
         let mut board: u64 = 0;
-        for bishop in self.bboards {
-            board &= bishop.board();
+        for bishop in self.bboards.iter() {
+            board |= bishop.board();
         }
         board
     }
@@ -68,7 +67,7 @@ impl BishopSet {
     pub fn evaluate(&self) -> i32 {
         let mut score = 0;
 
-        for bishop in self.bboards {
+        for bishop in self.bboards.iter() {
             score += 3 * bishop.piece_square_value();
         }
 
@@ -101,8 +100,8 @@ impl Bishop {
 
 impl Piece for Bishop {
     /// Returns a bitboard of valid moves
-    fn moves(&self) -> Vec<board::Move> {
-        let mut moves: Vec<board::Move> = Vec::new();
+    fn moves(&self) -> u64 {
+        let mut moves: u64 = 0;
 
         let index = board::bitscan(self.bboard).unwrap() as usize;
         let mut set = RAY_NORTH_EAST[index]
@@ -112,20 +111,16 @@ impl Piece for Bishop {
 
         while set != 0 {
             let to = set.trailing_zeros();
-            moves.push(board::Move {
-                from: self.bboard.trailing_zeros() as usize,
-                to: to as usize,
-                flags: board::BoardFlags::empty(),
-            });
-            set &= set - 1;
+            moves |= to as u64;
+            set |= set - 1;
         }
 
         moves
     }
 
     /// Returns a bitboard of valid attacks
-    fn attacks(&self, blockers: u64) -> Vec<board::Move> {
-        self.moves()
+    fn attacks(&self, blockers: u64) -> u64 {
+        todo!()
     }
 
     fn piece_square_value(&self) -> i32 {
@@ -147,7 +142,6 @@ impl Piece for Bishop {
 
 #[cfg(test)]
 mod test {
-    use super::*;
 
     #[test]
     fn test_bishop() {}

@@ -3,7 +3,6 @@ use super::board::{
     RAY_SOUTH_WEST, RAY_WEST,
 };
 use super::traits::Piece;
-use std::{fmt, ops::*};
 
 ///Queen structure
 ///
@@ -44,25 +43,21 @@ impl Queen {
 
 impl Piece for Queen {
     /// Returns all moves
-    fn moves(&self) -> Vec<board::Move> {
-        let mut moves: Vec<board::Move> = Vec::new();
+    fn moves(&self) -> u64 {
+        let mut moves: u64 = 0;
 
         let index = self.bboard.trailing_zeros() as usize;
         let mut set = RAY_WEST[index]
             | RAY_NORTH[index]
             | RAY_EAST[index]
             | RAY_SOUTH[index]
+            | RAY_WEST[index]
             | RAY_NORTH_EAST[index]
             | RAY_NORTH_WEST[index]
             | RAY_SOUTH_EAST[index]
             | RAY_SOUTH_WEST[index];
         while set != 0 {
-            let to = set.trailing_zeros();
-            moves.push(board::Move {
-                from: self.bboard.trailing_zeros() as usize,
-                to: to as usize,
-                flags: board::BoardFlags::empty(),
-            });
+            moves |= set.trailing_zeros() as u64;
             set &= set - 1;
         }
 
@@ -70,7 +65,7 @@ impl Piece for Queen {
     }
 
     /// Returns all attacks
-    fn attacks(&self, pos: u64) -> Vec<board::Move> {
+    fn attacks(&self, pos: u64) -> u64 {
         self.moves()
     }
 
@@ -91,7 +86,6 @@ impl Piece for Queen {
 
 #[cfg(test)]
 mod test {
-    use super::*;
 
     #[test]
     fn test_queen() {}

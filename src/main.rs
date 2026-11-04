@@ -20,7 +20,7 @@ pub struct Game {}
 #[derive(Debug, Clone, Hash, Eq, PartialEq)]
 pub struct State {
     castling_rights: CastlingRights,
-    en_passant_square: Option<board::Square>,
+    //en_passant_square: Option<board::Square>,
     half_move_counter: u8,
     stm: usize,
 }
