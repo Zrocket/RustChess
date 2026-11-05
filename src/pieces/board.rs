@@ -62,7 +62,7 @@ impl Board {
         0
     }
 
-    pub fn moves(&self) -> Vec<Move> {
+    pub fn moves(&self) -> u64 {
         todo!()
     }
 
@@ -123,12 +123,12 @@ impl Piece for Player {
         let mut board: u64 = 0;
 
         // add the pieces
-        board &= self.pawns.board();
-        board &= self.knights.board();
-        board &= self.bishops.board();
-        board &= self.rooks.board();
-        board &= self.queen.board();
-        board &= self.king.board();
+        board |= self.pawns.board();
+        board |= self.knights.board();
+        board |= self.bishops.board();
+        board |= self.rooks.board();
+        board |= self.queen.board();
+        board |= self.king.board();
 
         // return the board
         board

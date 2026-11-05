@@ -62,12 +62,12 @@ impl PawnSet {
         match side {
             board::Side::White => {
                 for i in board::A2..board::A3 {
-                    bboards[i] = Pawn::new(board::POSITION_ARRAY[i], side);
+                    bboards[i - board::A2] = Pawn::new(board::POSITION_ARRAY[i], side);
                 }
             }
             board::Side::Black => {
                 for i in board::A7..board::A8 {
-                    bboards[i] = Pawn::new(board::POSITION_ARRAY[i], side);
+                    bboards[i - board::A7] = Pawn::new(board::POSITION_ARRAY[i], side);
                 }
             }
         }
@@ -148,15 +148,16 @@ impl Pawn {
 
     /// Returns a bitboard of a side relevant pawn double push
     pub fn double_push(&self) -> u64 {
-        self.push();
-        self.push();
-        self.bboard
+        match self.side {
+            board::Side::White => board::north_one(self.push()),
+            board::Side::Black => board::south_one(self.push()),
+        }
     }
 
     /// Returns a bitboard of valid west attacks
     pub fn west_attacks(&self) -> u64 {
         match self.side {
-            board::Side::White => board::northeast_one(self.bboard),
+            board::Side::White => board::northwest_one(self.bboard),
             board::Side::Black => board::southwest_one(self.bboard),
         }
     }

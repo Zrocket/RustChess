@@ -34,6 +34,7 @@ impl Ai {
         let moves = board.moves();
 
         // Iterate over all the moves and evaluate them
+        /*
         for mv in moves {
             value = -self.alpha_beta(board, depth - 1, -beta, -alpha);
 
@@ -46,6 +47,7 @@ impl Ai {
                 alpha = value;
             }
         }
+        */
 
         // Return the best move
         alpha

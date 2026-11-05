@@ -41,7 +41,7 @@ impl Piece for RookSet {
     fn board(&self) -> u64 {
         let mut board: u64 = 0;
         for rook in self.bboards.iter() {
-            board &= rook.board();
+            board |= rook.board();
         }
         board
     }
