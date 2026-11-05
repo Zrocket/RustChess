@@ -10,8 +10,9 @@ use super::traits::Piece;
 ///
 /// # [OPTIONAL: more explanations and code examples in case some specific
 /// # cases have to be explained in details]
+#[derive(Debug, Clone, Copy)]
 pub struct KnightSet {
-    bboards: Vec<Knight>,
+    bboards: [Knight; 2],
     side: board::Side,
 }
 
@@ -55,16 +56,19 @@ impl Piece for KnightSet {
 impl KnightSet {
     /// Creates a new KnightSet of the given side
     pub fn new(side: board::Side) -> Self {
-        let mut bboards: Vec<Knight> = Vec::new();
+        let mut bboards: [Knight; 2] = [
+            Knight::new(0, side),
+            Knight::new(0, side),
+        ];
 
         match side {
             board::Side::White => {
-                bboards.push(Knight::new(board::POSITION_ARRAY[board::B1], side));
-                bboards.push(Knight::new(board::POSITION_ARRAY[board::G1], side));
+                bboards[0] = Knight::new(board::POSITION_ARRAY[board::B1], side);
+                bboards[1] = Knight::new(board::POSITION_ARRAY[board::G1], side);
             }
             board::Side::Black => {
-                bboards.push(Knight::new(board::POSITION_ARRAY[board::B8], side));
-                bboards.push(Knight::new(board::POSITION_ARRAY[board::G8], side));
+                bboards[0] = Knight::new(board::POSITION_ARRAY[board::B8], side);
+                bboards[1] = Knight::new(board::POSITION_ARRAY[board::G8], side);
             }
         }
 

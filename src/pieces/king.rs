@@ -2,6 +2,7 @@ use super::board;
 use super::traits::Piece;
 
 ///King structure
+#[derive(Debug, Clone, Copy)]
 pub struct King {
     bboard: u64,
     side: board::Side,
@@ -38,14 +39,14 @@ impl Piece for King {
     /// Returns all moves
     fn moves(&self) -> u64 {
 
-        board::north_one(self.bboard).trailing_zeros() as u64
-            | board::west_one(self.bboard).trailing_zeros() as u64
-            | board::east_one(self.bboard).trailing_zeros() as u64
-            | board::south_one(self.bboard).trailing_zeros() as u64
-            | board::northeast_one(self.bboard).trailing_zeros() as u64
-            | board::northwest_one(self.bboard).trailing_zeros() as u64
-            | board::southwest_one(self.bboard).trailing_zeros() as u64
-            | board::southeast_one(self.bboard).trailing_zeros() as u64
+        board::north_one(self.bboard)
+            | board::west_one(self.bboard)
+            | board::east_one(self.bboard)
+            | board::south_one(self.bboard)
+            | board::northeast_one(self.bboard)
+            | board::northwest_one(self.bboard)
+            | board::southwest_one(self.bboard)
+            | board::southeast_one(self.bboard)
     }
 
     /// Returns all attacks

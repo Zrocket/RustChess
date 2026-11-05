@@ -30,36 +30,33 @@ pub struct Zobrist {
 
 impl Default for Zobrist {
     fn default() -> Self {
-        // Get a random number generator
-        let mut rng = rand::thread_rng();
-
         // Generate the zobrist
         Zobrist {
-            pawn_white: (0..63).map(|_| rng.gen()).collect(),
-            knight_white: (0..63).map(|_| rng.gen()).collect(),
-            bishop_white: (0..63).map(|_| rng.gen()).collect(),
-            rook_white: (0..63).map(|_| rng.gen()).collect(),
-            queen_white: (0..63).map(|_| rng.gen()).collect(),
-            king_white: (0..63).map(|_| rng.gen()).collect(),
-            pawn_black: (0..63).map(|_| rng.gen()).collect(),
-            knight_black: (0..63).map(|_| rng.gen()).collect(),
-            bishop_black: (0..63).map(|_| rng.gen()).collect(),
-            rook_black: (0..63).map(|_| rng.gen()).collect(),
-            queen_black: (0..63).map(|_| rng.gen()).collect(),
-            king_black: (0..63).map(|_| rng.gen()).collect(),
-            move_black: rng.gen(),
-            castling_king_black: rng.gen(),
-            castling_queen_black: rng.gen(),
-            castling_king_white: rng.gen(),
-            castling_queen_white: rng.gen(),
-            passant_a: rng.gen(),
-            passant_b: rng.gen(),
-            passant_c: rng.gen(),
-            passant_d: rng.gen(),
-            passant_e: rng.gen(),
-            passant_f: rng.gen(),
-            passant_g: rng.gen(),
-            passant_h: rng.gen(),
+            pawn_white: (0..64).map(|_| rand::random()).collect(),
+            knight_white: (0..64).map(|_| rand::random()).collect(),
+            bishop_white: (0..64).map(|_| rand::random()).collect(),
+            rook_white: (0..64).map(|_| rand::random()).collect(),
+            queen_white: (0..64).map(|_| rand::random()).collect(),
+            king_white: (0..64).map(|_| rand::random()).collect(),
+            pawn_black: (0..64).map(|_| rand::random()).collect(),
+            knight_black: (0..64).map(|_| rand::random()).collect(),
+            bishop_black: (0..64).map(|_| rand::random()).collect(),
+            rook_black: (0..64).map(|_| rand::random()).collect(),
+            queen_black: (0..64).map(|_| rand::random()).collect(),
+            king_black: (0..64).map(|_| rand::random()).collect(),
+            move_black: rand::random(),
+            castling_king_black: rand::random(),
+            castling_queen_black: rand::random(),
+            castling_king_white: rand::random(),
+            castling_queen_white: rand::random(),
+            passant_a: rand::random(),
+            passant_b: rand::random(),
+            passant_c: rand::random(),
+            passant_d: rand::random(),
+            passant_e: rand::random(),
+            passant_f: rand::random(),
+            passant_g: rand::random(),
+            passant_h: rand::random(),
         }
     }
 }

@@ -2,9 +2,10 @@ use super::board::{self, RAY_EAST, RAY_NORTH, RAY_SOUTH, RAY_WEST};
 use super::traits::Piece;
 
 /// A complete set of black and white Rooks
+#[derive(Debug, Clone, Copy)]
 pub struct RookSet {
     /// Rook bitboards
-    bboards: Vec<Rook>,
+    bboards: [Rook; 2],
     /// The side of the board
     side: board::Side,
 }
@@ -49,16 +50,19 @@ impl Piece for RookSet {
 impl RookSet {
     /// Creates a new RookSet of the given side
     pub fn new(side: board::Side) -> Self {
-        let mut bboards: Vec<Rook> = Vec::new();
+        let mut bboards: [Rook; 2] = [
+            Rook::new(0, side),
+            Rook::new(0, side),
+        ];
 
         match side {
             board::Side::White => {
-                bboards.push(Rook::new(board::POSITION_ARRAY[board::A1], side));
-                bboards.push(Rook::new(board::POSITION_ARRAY[board::H1], side));
+                bboards[0] = Rook::new(board::POSITION_ARRAY[board::A1], side);
+                bboards[1] = Rook::new(board::POSITION_ARRAY[board::H1], side);
             }
             board::Side::Black => {
-                bboards.push(Rook::new(board::POSITION_ARRAY[board::A8], side));
-                bboards.push(Rook::new(board::POSITION_ARRAY[board::H8], side));
+                bboards[0] = Rook::new(board::POSITION_ARRAY[board::A8], side);
+                bboards[1] = Rook::new(board::POSITION_ARRAY[board::H8], side);
             }
         }
 
@@ -78,6 +82,7 @@ impl RookSet {
 }
 
 /// Rook structure
+#[derive(Debug, Clone, Copy)]
 pub struct Rook {
     bboard: u64,
     side: board::Side,

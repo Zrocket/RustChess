@@ -2,8 +2,9 @@ use super::board::{self, RAY_NORTH_EAST, RAY_NORTH_WEST, RAY_SOUTH_EAST, RAY_SOU
 use super::traits::Piece;
 
 /// Bishopset structure
+#[derive(Debug, Clone, Copy)]
 pub struct BishopSet {
-    bboards: Vec<Bishop>,
+    bboards: [Bishop; 2],
     side: board::Side,
 }
 
@@ -47,16 +48,19 @@ impl Piece for BishopSet {
 impl BishopSet {
     /// Creates a new BishopSet of the given side
     pub fn new(side: board::Side) -> BishopSet {
-        let mut bboards: Vec<Bishop> = Vec::new();
+        let mut bboards: [Bishop; 2] = [
+            Bishop::new(0, side),
+            Bishop::new(0, side),
+        ];
 
         match side {
             board::Side::White => {
-                bboards.push(Bishop::new(board::POSITION_ARRAY[board::C1], side));
-                bboards.push(Bishop::new(board::POSITION_ARRAY[board::F1], side));
+                bboards[0] = Bishop::new(board::POSITION_ARRAY[board::C1], side);
+                bboards[1] = Bishop::new(board::POSITION_ARRAY[board::F1], side);
             }
             board::Side::Black => {
-                bboards.push(Bishop::new(board::POSITION_ARRAY[board::C8], side));
-                bboards.push(Bishop::new(board::POSITION_ARRAY[board::F8], side));
+                bboards[0] = Bishop::new(board::POSITION_ARRAY[board::C8], side);
+                bboards[1] = Bishop::new(board::POSITION_ARRAY[board::F8], side);
             }
         }
 
@@ -76,6 +80,7 @@ impl BishopSet {
 }
 
 /// Bishop structure
+#[derive(Debug, Clone, Copy)]
 pub struct Bishop {
     bboard: u64,
     side: board::Side,

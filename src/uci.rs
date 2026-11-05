@@ -27,7 +27,7 @@ impl Default for Uci {
 pub struct Xboard;
 
 impl Uci {
-    fn debug(&self, params: &mut SplitWhitespace) {
+    fn debug(&mut self, params: &mut SplitWhitespace) {
         if let Some(command) = params.next() {
             match command {
                 "on" => self.debug = true,
@@ -132,29 +132,30 @@ impl Uci {
         }
     }
 
-    fn engine_loop(&self) {
+    fn engine_loop(&mut self) {
         println!("id name {}", self.name);
         println!("id author {}", self.author);
         println!("uciok");
         loop {
             for line in io::stdin().lines() {
-                let mut params = line.unwrap().split_whitespace();
-
-                if let Some(command) = params.next() {
-                    match command {
-                        "debug" => self.debug(&mut params),
-                        "isready" => self.is_ready(&mut params),
-                        "setoption" => self.set_option(&mut params),
-                        "register" => self.register(&mut params),
-                        "position" => self.position(&mut params),
-                        "go" => self.go(&mut params),
-                        "stop" => self.stop(&mut params),
-                        "ponderhit" => self.ponder_hit(&mut params),
-                        "quit" => self.quit(&mut params),
-                        "ucinewgame" => self.uci_new_game(&mut params),
-                        "perft" => self.perft(&mut params),
-                        "test" => self.test(&mut params),
-                        _ => println!("Unkown command: {}", command),
+                if let Ok(line) = line
+                && let mut params = line.split_whitespace() {
+                    if let Some(command) = params.next() {
+                        match command {
+                            "debug" => self.debug(&mut params),
+                            "isready" => self.is_ready(&mut params),
+                            "setoption" => self.set_option(&mut params),
+                            "register" => self.register(&mut params),
+                            "position" => self.position(&mut params),
+                            "go" => self.go(&mut params),
+                            "stop" => self.stop(&mut params),
+                            "ponderhit" => self.ponder_hit(&mut params),
+                            "quit" => self.quit(&mut params),
+                            "ucinewgame" => self.uci_new_game(&mut params),
+                            "perft" => self.perft(&mut params),
+                            "test" => self.test(&mut params),
+                            _ => println!("Unkown command: {}", command),
+                        }
                     }
                 }
             }
@@ -196,17 +197,19 @@ fn decode_fen(fen: &str) {
 /// Main entry point
 pub fn entry() {
     for line in io::stdin().lines() {
-        let mut params = line.unwrap().split_whitespace();
-
-        if let Some(command) = params.next() {
-            match command {
-                "uci" => {
-                    let engine = Uci::default();
-                    engine.engine_loop();
+        if let Ok(line) = line
+            && let mut params = line.split_whitespace() {
+            if let Some(command) = params.next() {
+                match command {
+                    "uci" => {
+                        let mut engine = Uci::default();
+                        engine.engine_loop();
+                    }
+                    _ => println!("Unkown command: {}", command),
                 }
-                _ => println!("Unkown command: {}", command),
             }
         }
+
     }
 }
 

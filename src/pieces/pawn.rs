@@ -1,9 +1,10 @@
-use super::board::self;
+use super::board;
 use super::traits::Piece;
 
 /// A complete set of black and white pawns
+#[derive(Debug, Clone, Copy)]
 pub struct PawnSet {
-    bboards: Vec<Pawn>,
+    bboards: [Pawn; 8],
     side: board::Side,
 }
 
@@ -47,17 +48,26 @@ impl Piece for PawnSet {
 impl PawnSet {
     /// Creates a new PawnSet of the given side
     pub fn new(side: board::Side) -> Self {
-        let mut bboards: Vec<Pawn> = Vec::new();
+        let mut bboards: [Pawn; 8] = [
+            Pawn::new(0, side),
+            Pawn::new(0, side),
+            Pawn::new(0, side),
+            Pawn::new(0, side),
+            Pawn::new(0, side),
+            Pawn::new(0, side),
+            Pawn::new(0, side),
+            Pawn::new(0, side),
+        ];
 
         match side {
             board::Side::White => {
                 for i in board::A2..board::A3 {
-                    bboards.push(Pawn::new(board::POSITION_ARRAY[i], side));
+                    bboards[i] = Pawn::new(board::POSITION_ARRAY[i], side);
                 }
             }
             board::Side::Black => {
                 for i in board::A7..board::A8 {
-                    bboards.push(Pawn::new(board::POSITION_ARRAY[i], side));
+                    bboards[i] = Pawn::new(board::POSITION_ARRAY[i], side);
                 }
             }
         }
@@ -77,6 +87,7 @@ impl PawnSet {
 }
 
 /// Pawn structure
+#[derive(Debug, Clone, Copy)]
 pub struct Pawn {
     pub bboard: u64,
     pub side: board::Side,
@@ -85,14 +96,14 @@ pub struct Pawn {
 impl Piece for Pawn {
     /// Returns a bitboard of all valid moves
     fn moves(&self) -> u64 {
-        self.push().trailing_zeros() as u64
-            | self.double_push().trailing_zeros() as u64
+        self.push()
+            | self.double_push()
     }
 
     /// Returns a bitboard of all valid attacks
     fn attacks(&self, blockers: u64) -> u64 {
-        self.west_attacks().trailing_zeros() as u64
-            | self.east_attacks().trailing_zeros() as u64
+        self.west_attacks()
+            | self.east_attacks()
     }
 
     fn piece_square_value(&self) -> i32 {

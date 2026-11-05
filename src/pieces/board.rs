@@ -30,6 +30,7 @@ pub struct Move {
 }
 
 /// Represents a board
+#[derive(Debug, Clone, Copy)]
 pub struct Board {
     white: Player,
     black: Player,
@@ -76,6 +77,7 @@ impl Board {
 }
 
 /// Player structure
+#[derive(Debug, Clone, Copy)]
 pub struct Player {
     pawns: PawnSet,
     knights: KnightSet,

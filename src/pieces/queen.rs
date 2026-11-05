@@ -10,6 +10,7 @@ use super::traits::Piece;
 /// ```
 /// ```
 ///
+#[derive(Debug, Clone, Copy)]
 pub struct Queen {
     bboard: u64,
     side: board::Side,
@@ -44,24 +45,16 @@ impl Queen {
 impl Piece for Queen {
     /// Returns all moves
     fn moves(&self) -> u64 {
-        let mut moves: u64 = 0;
-
         let index = self.bboard.trailing_zeros() as usize;
-        let mut set = RAY_WEST[index]
-            | RAY_NORTH[index]
+
+        RAY_NORTH[index]
             | RAY_EAST[index]
             | RAY_SOUTH[index]
             | RAY_WEST[index]
             | RAY_NORTH_EAST[index]
             | RAY_NORTH_WEST[index]
             | RAY_SOUTH_EAST[index]
-            | RAY_SOUTH_WEST[index];
-        while set != 0 {
-            moves |= set.trailing_zeros() as u64;
-            set &= set - 1;
-        }
-
-        moves
+            | RAY_SOUTH_WEST[index]
     }
 
     /// Returns all attacks
