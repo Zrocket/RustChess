@@ -1,5 +1,4 @@
 use super::board;
-use super::traits::Piece;
 
 /// Default white king board
 pub const WHITE_DEFAULT: u64 = 0x8;
@@ -15,8 +14,7 @@ pub const KING_TABLE: [i32; 64] = [
 ];
 
 /// Returns all moves
-fn moves(bboard: u64) -> u64 {
-
+pub fn moves(bboard: u64) -> u64 {
     board::north_one(bboard)
         | board::west_one(bboard)
         | board::east_one(bboard)
@@ -28,12 +26,12 @@ fn moves(bboard: u64) -> u64 {
 }
 
 /// Returns all attacks
-fn attacks(bboard: u64, blockers: u64) -> u64 {
+pub fn attacks(bboard: u64, blockers: u64) -> u64 {
     todo!()
 }
 
 /// Returns the piece square value
-fn piece_square_value(bboard: u64, side: board::Side) -> i32 {
+pub fn piece_square_value(bboard: u64, side: board::Side) -> i32 {
     match side {
         board::Side::White => return KING_TABLE[bboard.trailing_zeros() as usize],
         board::Side::Black => {

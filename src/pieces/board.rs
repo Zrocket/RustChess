@@ -1,7 +1,3 @@
-use super::{
-    bishop::BishopSet, king::King, knight::KnightSet, queen::Queen, rook::RookSet,
-    traits::Piece,
-};
 use bitflags::bitflags;
 
 bitflags! {
@@ -80,59 +76,11 @@ impl Board {
 #[derive(Debug, Clone, Copy)]
 pub struct Player {
     pawns: [u64; 8],
-    kignts: [u64; 2],
+    knights: [u64; 2],
     bishops: [u64; 2],
     rooks: [u64; 2],
     queen: u64,
     king: u64,
-}
-
-impl Piece for Player {
-    /// Returns all moves
-    fn moves(&self) -> u64 {
-
-        // add moves for each piece
-        self.pawns.moves()
-            | self.knights.moves()
-            | self.bishops.moves()
-            | self.rooks.moves()
-            | self.queen.moves()
-            | self.king.moves()
-    }
-
-    /// Returns all attacks
-    fn attacks(&self, blockers: u64) -> u64 {
-
-        // add moves for each piece
-        self.pawns.attacks(blockers)
-            | self.knights.attacks(blockers)
-            | self.bishops.attacks(blockers)
-            | self.rooks.attacks(blockers)
-            | self.queen.attacks(blockers)
-            | self.king.attacks(blockers)
-    }
-
-    /// Returns the piece square value
-    fn piece_square_value(&self) -> i32 {
-        unimplemented!()
-    }
-
-    /// Returns the board
-    fn board(&self) -> u64 {
-        // create a board
-        let mut board: u64 = 0;
-
-        // add the pieces
-        board |= self.pawns.board();
-        board |= self.knights.board();
-        board |= self.bishops.board();
-        board |= self.rooks.board();
-        board |= self.queen.board();
-        board |= self.king.board();
-
-        // return the board
-        board
-    }
 }
 
 impl Player {
@@ -186,77 +134,77 @@ impl Player {
 /// ```
 /// ```
 ///
-pub const A1: usize = 0;
-pub const B1: usize = 1;
-pub const C1: usize = 2;
-pub const D1: usize = 3;
-pub const E1: usize = 4;
-pub const F1: usize = 5;
-pub const G1: usize = 6;
-pub const H1: usize = 7;
+pub const A1: usize = 7;
+pub const B1: usize = 6;
+pub const C1: usize = 5;
+pub const D1: usize = 4;
+pub const E1: usize = 3;
+pub const F1: usize = 2;
+pub const G1: usize = 1;
+pub const H1: usize = 0;
 
-pub const A2: usize = 8;
-pub const B2: usize = 9;
-pub const C2: usize = 10;
-pub const D2: usize = 11;
-pub const E2: usize = 12;
-pub const F2: usize = 13;
-pub const G2: usize = 14;
-pub const H2: usize = 15;
+pub const A2: usize = 15;
+pub const B2: usize = 14;
+pub const C2: usize = 13;
+pub const D2: usize = 12;
+pub const E2: usize = 11;
+pub const F2: usize = 10;
+pub const G2: usize = 9;
+pub const H2: usize = 8;
 
-pub const A3: usize = 16;
-pub const B3: usize = 17;
-pub const C3: usize = 18;
-pub const D3: usize = 19;
-pub const E3: usize = 20;
-pub const F3: usize = 21;
-pub const G3: usize = 22;
-pub const H3: usize = 23;
+pub const A3: usize = 23;
+pub const B3: usize = 22;
+pub const C3: usize = 21;
+pub const D3: usize = 20;
+pub const E3: usize = 19;
+pub const F3: usize = 18;
+pub const G3: usize = 17;
+pub const H3: usize = 16;
 
-pub const A4: usize = 24;
-pub const B4: usize = 25;
-pub const C4: usize = 26;
-pub const D4: usize = 27;
-pub const E4: usize = 28;
-pub const F4: usize = 29;
-pub const G4: usize = 30;
-pub const H4: usize = 31;
+pub const A4: usize = 31;
+pub const B4: usize = 30;
+pub const C4: usize = 29;
+pub const D4: usize = 28;
+pub const E4: usize = 27;
+pub const F4: usize = 26;
+pub const G4: usize = 25;
+pub const H4: usize = 24;
 
-pub const A5: usize = 32;
-pub const B5: usize = 33;
-pub const C5: usize = 34;
-pub const D5: usize = 35;
-pub const E5: usize = 36;
-pub const F5: usize = 37;
-pub const G5: usize = 38;
-pub const H5: usize = 39;
+pub const A5: usize = 39;
+pub const B5: usize = 38;
+pub const C5: usize = 37;
+pub const D5: usize = 36;
+pub const E5: usize = 35;
+pub const F5: usize = 34;
+pub const G5: usize = 33;
+pub const H5: usize = 32;
 
-pub const A6: usize = 40;
-pub const B6: usize = 41;
-pub const C6: usize = 42;
-pub const D6: usize = 43;
-pub const E6: usize = 44;
-pub const F6: usize = 45;
-pub const G6: usize = 46;
-pub const H6: usize = 47;
+pub const A6: usize = 47;
+pub const B6: usize = 46;
+pub const C6: usize = 45;
+pub const D6: usize = 44;
+pub const E6: usize = 43;
+pub const F6: usize = 42;
+pub const G6: usize = 41;
+pub const H6: usize = 40;
 
-pub const A7: usize = 48;
-pub const B7: usize = 49;
-pub const C7: usize = 50;
-pub const D7: usize = 51;
-pub const E7: usize = 52;
-pub const F7: usize = 53;
-pub const G7: usize = 54;
-pub const H7: usize = 55;
+pub const A7: usize = 55;
+pub const B7: usize = 54;
+pub const C7: usize = 53;
+pub const D7: usize = 52;
+pub const E7: usize = 51;
+pub const F7: usize = 50;
+pub const G7: usize = 49;
+pub const H7: usize = 48;
 
-pub const A8: usize = 56;
-pub const B8: usize = 57;
-pub const C8: usize = 58;
-pub const D8: usize = 59;
-pub const E8: usize = 60;
-pub const F8: usize = 61;
-pub const G8: usize = 62;
-pub const H8: usize = 63;
+pub const A8: usize = 63;
+pub const B8: usize = 62;
+pub const C8: usize = 61;
+pub const D8: usize = 60;
+pub const E8: usize = 59;
+pub const F8: usize = 58;
+pub const G8: usize = 57;
+pub const H8: usize = 56;
 
 /// Bits for every position on the board
 pub const POSITION_ARRAY: [u64; 64] = [
@@ -393,7 +341,7 @@ pub const RAY_NORTH: [u64; 64] = [
     0x8000000000000000,
 ];
 
-pub const RAY_EAST: [u64; 64] = [
+pub const RAY_WEST: [u64; 64] = [
     0xff,
     0xfe,
     0xfc,
@@ -527,7 +475,7 @@ pub const RAY_SOUTH: [u64; 64] = [
     0x8080808080808080,
 ];
 
-pub const RAY_WEST: [u64; 64] = [
+pub const RAY_EAST: [u64; 64] = [
     0x1,
     0x3,
     0x7,
@@ -594,7 +542,7 @@ pub const RAY_WEST: [u64; 64] = [
     0xff00000000000000,
 ];
 
-pub const RAY_NORTH_WEST: [u64; 64] = [
+pub const RAY_NORTH_EAST: [u64; 64] = [
     0x1,
     0x102,
     0x10204,
@@ -661,7 +609,7 @@ pub const RAY_NORTH_WEST: [u64; 64] = [
     0x8000000000000000,
 ];
 
-pub const RAY_NORTH_EAST: [u64; 64] = [
+pub const RAY_NORTH_WEST: [u64; 64] = [
     0x8040201008040201,
     0x80402010080402,
     0x804020100804,
@@ -728,7 +676,7 @@ pub const RAY_NORTH_EAST: [u64; 64] = [
     0x8000000000000000,
 ];
 
-pub const RAY_SOUTH_WEST: [u64; 64] = [
+pub const RAY_SOUTH_EAST: [u64; 64] = [
     0x1,
     0x2,
     0x4,
@@ -795,7 +743,7 @@ pub const RAY_SOUTH_WEST: [u64; 64] = [
     0x8040201008040201,
 ];
 
-pub const RAY_SOUTH_EAST: [u64; 64] = [
+pub const RAY_SOUTH_WEST: [u64; 64] = [
     0x1,
     0x2,
     0x4,
@@ -884,6 +832,7 @@ pub enum Ray {
 pub const EMPTY: u64 = 0x0000000000000000;
 /// Full bitboard
 pub const FULL: u64 = 0xFFFFFFFFFFFFFFFF;
+
 // Columns
 /// Full H file
 pub const H_FILE: u64 = 0x8080808080808080;
@@ -901,6 +850,7 @@ pub const C_FILE: u64 = 0x404040404040404;
 pub const B_FILE: u64 = 0x202020202020202;
 /// Full A file
 pub const A_FILE: u64 = 0x101010101010101;
+
 // Rows
 /// Full rank 1
 pub const RANK_1: u64 = 0x00000000000000FF;
@@ -918,14 +868,12 @@ pub const RANK_6: u64 = 0x0000FF0000000000;
 pub const RANK_7: u64 = 0x00FF000000000000;
 /// Full rank 8
 pub const RANK_8: u64 = 0xFF00000000000000;
-// Diagonals
-pub const A1_H8_DIAGONAL: u64 = 0x8040201008040201;
-pub const H1_A8_ANTIDIAGONAL: u64 = 0x0102040810204080;
+
 // Colors
 /// Full light squares
-pub const LIGHT_SQUARES: u64 = 0x55AA55AA55AA55AA;
+pub const DARK_SQUARES: u64 = 0x55AA55AA55AA55AA;
 /// Full dark squares
-pub const DARK_SQUARES: u64 = 0xAA55AA55AA55AA55;
+pub const LIGHT_SQUARES: u64 = 0xAA55AA55AA55AA55;
 
 /// Find the first set bit
 pub fn bitscan(board: u64) -> Option<u64> {

@@ -4,7 +4,7 @@ use super::board::{self, RAY_NORTH_EAST, RAY_NORTH_WEST, RAY_SOUTH_EAST, RAY_SOU
 pub const WHITE_DEFAULT: u64 = 0x24;
 
 /// Default black bishop board
-pub const BLACK_DEFAULT: u64 = 2400000000000000;
+pub const BLACK_DEFAULT: u64 = 0x2400000000000000;
 
 pub const BISHOP_TABLE: [i32; 64] = [
     -20, -10, -10, -10, -10, -10, -10, -20, -10, 0, 0, 0, 0, 0, 0, -10, -10, 0, 5, 10, 10, 5,
@@ -13,7 +13,7 @@ pub const BISHOP_TABLE: [i32; 64] = [
 ];
 
 /// Returns a bitboard of valid moves
-fn moves(bboard: u64) -> u64 {
+pub fn moves(bboard: u64) -> u64 {
     let mut moves: u64 = 0;
 
     let index = board::bitscan(bboard).unwrap() as usize;
@@ -32,11 +32,11 @@ fn moves(bboard: u64) -> u64 {
 }
 
 /// Returns a bitboard of valid attacks
-fn attacks(bboard: u64, blockers: u64) -> u64 {
+pub fn attacks(bboard: u64, blockers: u64) -> u64 {
     todo!()
 }
 
-fn piece_square_value(bboard: u64, side: board::Side) -> i32 {
+pub fn piece_square_value(bboard: u64, side: board::Side) -> i32 {
     match side {
         board::Side::White => {
             return BISHOP_TABLE[bboard.trailing_zeros() as usize]
