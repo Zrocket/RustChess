@@ -1,5 +1,5 @@
 use super::{
-    bishop::BishopSet, king::King, knight::KnightSet, pawn::PawnSet, queen::Queen, rook::RookSet,
+    bishop::BishopSet, king::King, knight::KnightSet, queen::Queen, rook::RookSet,
     traits::Piece,
 };
 use bitflags::bitflags;
@@ -79,12 +79,12 @@ impl Board {
 /// Player structure
 #[derive(Debug, Clone, Copy)]
 pub struct Player {
-    pawns: PawnSet,
-    knights: KnightSet,
-    bishops: BishopSet,
-    rooks: RookSet,
-    queen: Queen,
-    king: King,
+    pawns: [u64; 8],
+    kignts: [u64; 2],
+    bishops: [u64; 2],
+    rooks: [u64; 2],
+    queen: u64,
+    king: u64,
 }
 
 impl Piece for Player {
@@ -138,13 +138,27 @@ impl Piece for Player {
 impl Player {
     /// Creates a new player
     pub fn new(side: Side) -> Self {
-        Player {
-            pawns: PawnSet::new(side),
-            knights: KnightSet::new(side),
-            bishops: BishopSet::new(side),
-            rooks: RookSet::new(side),
-            queen: Queen::new(side),
-            king: King::new(side),
+        match side {
+            Side::White => {
+                Player {
+                    pawns: []
+                    knights: [],
+                    bishops: [],
+                    rooks: [],
+                    queen: [],
+                    king: [],
+                }
+            }
+            Side::Black => {
+                Player {
+                    pawns: []
+                    knights: [],
+                    bishops: [],
+                    rooks: [],
+                    queen: [],
+                    king: [],
+                }
+            }
         }
     }
 
